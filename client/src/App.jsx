@@ -1,17 +1,15 @@
-import { useState } from 'react'
 import './App.css'
-import ChoreList from './Components/ChoreList/ChoreList';
+import LandingPage from './Components/LandingPage/LandingPage';
 
-function App() {
-  const [choreList, setChoreList] = useState([]);
+export default function App() {
+  const [tab, setTab] = useState('LandingPage');
 
   return (
     <>
       <div className="body-container">
-        <ChoreList choreList={choreList} setChoreList={setChoreList} />
+        <LandingPage />
       </div>
     </>
   )
 }
 
-export default App

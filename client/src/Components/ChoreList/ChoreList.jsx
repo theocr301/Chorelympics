@@ -4,6 +4,7 @@ import ChoreItem from '../ChoreItem/ChoreItem.jsx'
 import './ChoreList.css';
 
 export default function ChoreList({choreList, setChoreList}) {
+  const [choreList, setChoreList] = useState([]);
 
   useEffect(() => {
     getAllChores().then(setChoreList);

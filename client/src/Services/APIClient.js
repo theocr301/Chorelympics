@@ -11,20 +11,18 @@ export async function getAllChores() {
   }
 }
 
-export async function postEvent(eventTitle, eventDate, eventVenue) {
+export async function generateUser(name) {
   try {
-    const response = await fetch(`${baseUrl}/events`, {
+    const response = await fetch(`${baseUrl}/users`, {
       method: "POST",
       body: JSON.stringify({
-        "title": `${eventTitle}`,
-        "date": `${eventDate}`,
-        "venue": `${eventVenue}`,
+        "name": `${name}`,
     }),
       headers: {"Content-Type": "application/json"}
     });
     const data = await response.json();
     return data;
   } catch (error) {
-    console.log('Error posting event');
+    console.log('Error creating user');
   }
 }
