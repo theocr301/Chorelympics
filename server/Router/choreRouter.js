@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const { getAllChores, generateChore, markChoreComplete, markChoreNotComplete, assignChore, unassignChore } = require('../Controllers/choreControllers.js')
+const { getAllChores, generateChore, markChoreComplete, markChoreNotComplete, assignChore, unassignChore } = require('../Controllers/choreControllers.js');
 
 router.get('/chores', getAllChores);
 router.post('/chores', generateChore);

@@ -1,0 +1,26 @@
+const User = require('../Models/userModels.js');
+
+exports.getAllUsers = async function (request, response) {
+  try {
+    const data = await User.find({});
+    response.status(200);
+    response.send(data);
+  } catch (error) {
+    response.status(400);
+  }
+};
+
+exports.generateUser = async function (request, response) {
+  const { name } = request.body;
+
+  if (!name || typeof name !== 'string') {
+    response.status(400).send('Bad Request, Name is required, must be a string and different from existing entries');
+  }
+  try {
+    const data = await User.insertOne(request.body);
+    response.status(201).send(`${data.name} added to the Users list`); 
+  } catch (error) {
+    console.log(error);
+    response.status(400).send('Something went wrong while creating the user, it might already exist in the DB');
+  }
+};
