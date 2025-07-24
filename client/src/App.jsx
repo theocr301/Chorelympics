@@ -14,7 +14,7 @@ export default function App() {
         <BrowserRouter>
           <Routes>
             <Route path="/" element={<LandingPage user={user} setUser={setUser}/>} />
-            <Route path=":user" element={<ChoreList user={user} setUser={setUser}/>} />
+            <Route path=":user/chores" element={<ChoreList />} />
           </Routes>
         </BrowserRouter>
       </div>

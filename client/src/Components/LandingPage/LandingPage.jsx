@@ -12,7 +12,7 @@ export default function LandingPage({user, setUser}) {
     const newUser = await generateUser(userName);
     setUser(newUser);
     const pathingHelper = userName.toLowerCase();
-    navigate(`/${pathingHelper}`)
+    navigate(`/${pathingHelper}/chores`)
     setUserName('')
   }
 

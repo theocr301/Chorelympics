@@ -2,9 +2,11 @@ import { useEffect, useState } from 'react'
 import { getAllChores } from '../../Services/APIClient.js'
 import ChoreItem from '../ChoreItem/ChoreItem.jsx'
 import './ChoreList.css';
+import { useParams } from 'react-router';
 
-export default function ChoreList({user, setUser}) {
+export default function ChoreList() {
   const [choreList, setChoreList] = useState([]);
+  const { user } = useParams();
 
   useEffect(() => {
     getAllChores().then(setChoreList);
