@@ -1,5 +1,8 @@
-const { Chore, pushChore }= require('../Models/choreModels.js');
+const { Chore, pushChore, removeChore } = require('../Models/choreModels.js');
 const { parseName } = require('../utils.js');
+
+//TODO add sanity checks for duplicate entries, especially for assign and unassign
+//TODO 
 
 exports.getAllChores = async function (request, response) {
   try {
@@ -71,8 +74,6 @@ exports.assignChore = async function (request, response) {
     try {
       // const data = await Chore.findOneAndUpdate({ name: parseName(name) }).set('assignee', parseName(user));
       const { updatedChore, data } = await pushChore(user, name);
-      console.log(updatedChore);
-      console.log(data);
       response.status(200).send(`${updatedChore.name} assigned to ${parseName(data.name)}`);
     } catch (error) {
       console.log(error);
@@ -82,16 +83,17 @@ exports.assignChore = async function (request, response) {
 };
 
 exports.unassignChore = async function (request, response) {
-  const { name } = request.params;
+  const { user, name } = request.params;
 
-  if (!name || typeof name !== 'string') {
-    response.status(400).send('Bad Request, Name is required and must be a string');
+  if (!name || typeof name !== 'string' || !user || typeof user !== 'string') {
+    response.status(400).send('Bad Request, Name or User is required and must be a string');
   } else {
     try {
-      const data = await Chore.findOneAndUpdate({ name: parseName(name) }).set('assignee', 'Unassigned');
-      response.status(200).send(`${data.name} Unassigned`);
+      const { updatedChore, data } = await removeChore(user, name);
+      response.status(200).send(`${updatedChore.name} Unassigned from ${parseName(data.name)}`);
     } catch (error) {
-      response.status(400).send('Something went wrong while assigning chore');
+      console.log(error);
+      response.status(400).send('Something went wrong while unassigning chore');
     }
   }
 };

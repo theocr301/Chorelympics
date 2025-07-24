@@ -2,7 +2,7 @@ const baseUrl = 'http://localhost:3000';
 
 export async function getAllChores() {
   try {
-    const response = await fetch(`${baseUrl}/chores`);
+    const response = await fetch(`${baseUrl}/:user/chores`);
     const data = await response.json();
     data.sort((a, b) => a.pointReward - b.pointReward);
     return data;
@@ -23,6 +23,7 @@ export async function generateUser(name) {
     const data = await response.json();
     return data;
   } catch (error) {
+    console.log(error);
     console.log('Error creating user');
   }
 }

@@ -1,10 +1,11 @@
 import { useState } from 'react';
 import { generateUser } from '../../Services/APIClient';
-
+import { useNavigate } from 'react-router';
 
 export default function LandingPage() {
   const [user, setUser] = useState('');
   const [userName, setUserName] = useState('');
+  let navigate = useNavigate();
 
   /*
   useEffect(() => {
@@ -16,6 +17,8 @@ export default function LandingPage() {
     event.preventDefault();
     const newUser = await generateUser(userName);
     setUser(newUser);
+    const pathingHelper = userName.toLowerCase();
+    navigate(`/${pathingHelper}`)
     setUserName('')
   }
 

@@ -3,7 +3,7 @@ import { getAllChores } from '../../Services/APIClient.js'
 import ChoreItem from '../ChoreItem/ChoreItem.jsx'
 import './ChoreList.css';
 
-export default function ChoreList({choreList, setChoreList}) {
+export default function ChoreList() {
   const [choreList, setChoreList] = useState([]);
 
   useEffect(() => {
