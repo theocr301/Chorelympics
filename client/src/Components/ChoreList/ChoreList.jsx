@@ -16,7 +16,7 @@ export default function ChoreList({choreList, setChoreList}) {
         <div className="ChoreList">
           <div>
             {choreList.map(choreItem => (
-              <ChoreItem key={choreItem._id}choreItem={choreItem}/>
+              <ChoreItem key={choreItem._id} choreItem={choreItem}/>
             ))}
           </div>
         </div>
