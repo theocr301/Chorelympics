@@ -3,7 +3,7 @@ import { getAllChores } from '../../Services/APIClient.js'
 import ChoreItem from '../ChoreItem/ChoreItem.jsx'
 import './ChoreList.css';
 
-export default function ChoreList() {
+export default function ChoreList({user, setUser}) {
   const [choreList, setChoreList] = useState([]);
 
   useEffect(() => {
@@ -16,7 +16,7 @@ export default function ChoreList() {
         <div className="ChoreList">
           <div>
             {choreList.map(choreItem => (
-              <ChoreItem key={choreItem._id} choreItem={choreItem}/>
+              <ChoreItem key={choreItem._id} choreItem={choreItem} user={user} choreList={choreList} setChoreList={setChoreList}/>
             ))}
           </div>
         </div>

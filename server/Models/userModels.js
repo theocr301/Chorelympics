@@ -14,6 +14,10 @@ const UserSchema = new Schema({
   assignedChores: {
     type: Array,
     default: []
+  },
+  isCurrent: {
+    type: Boolean,
+    default: false
   }
 });
 

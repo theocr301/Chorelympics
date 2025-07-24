@@ -2,19 +2,13 @@ import { useState } from 'react';
 import { generateUser } from '../../Services/APIClient';
 import { useNavigate } from 'react-router';
 
-export default function LandingPage() {
-  const [user, setUser] = useState('');
+export default function LandingPage({user, setUser}) {
   const [userName, setUserName] = useState('');
   let navigate = useNavigate();
 
-  /*
-  useEffect(() => {
-    getAllChores().then(setChoreList);
-  }, []);
-  */
-
   async function handleSubmit(event) {
     event.preventDefault();
+    console.log(userName);
     const newUser = await generateUser(userName);
     setUser(newUser);
     const pathingHelper = userName.toLowerCase();

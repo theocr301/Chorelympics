@@ -7,8 +7,20 @@ exports.getAllUsers = async function (request, response) {
     response.send(data);
   } catch (error) {
     response.status(400);
+    response.send(error);
   }
 };
+
+exports.getCurrentUser = async function (request, response) {
+  try {
+    const data = await User.find({ isCurrent: true });
+    response.status(200);
+    response.send(data);
+  } catch (error) {
+    response.status(400);
+    response.send(error);
+  }
+}
 
 exports.generateUser = async function (request, response) {
   const { name } = request.body;
@@ -18,7 +30,7 @@ exports.generateUser = async function (request, response) {
   }
   try {
     const data = await User.insertOne(request.body);
-    response.status(201).send(`${data.name} added to the Users list`); 
+    response.status(201).send(data.name);
   } catch (error) {
     console.log(error);
     response.status(400).send('Something went wrong while creating the user, it might already exist in the DB');

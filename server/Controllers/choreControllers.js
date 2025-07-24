@@ -26,7 +26,7 @@ exports.generateChore = async function (request, response) {
   } else {
     try {
       const data = await Chore.insertOne(request.body);
-      response.status(201).send(`${data.name} added to the chore list`); 
+      response.status(201).send(data); 
     } catch (error) {
       console.log(error);
       response.status(400).send('Something went wrong while creating the chore, it might already exist in the DB');
@@ -42,7 +42,7 @@ exports.markChoreComplete = async function (request, response) {
   } else {
     try {
       const data = await Chore.findOneAndUpdate({ name: parseName(name) }).set('isDone', true);
-      response.status(200).send(`${data.name} marked as complete`);
+      response.status(200).send(data);
     } catch (error) {
       response.status(400).send('Something went wrong while marking chore as completed');
     }
@@ -57,7 +57,7 @@ exports.markChoreNotComplete = async function (request, response) {
   } else {
     try {
       const data = await Chore.findOneAndUpdate({ name: parseName(name) }).set('isDone', false);
-      response.status(200).send(`${data.name} marked as in progress`);
+      response.status(200).send(data);
     } catch (error) {
       response.status(400).send('Something went wrong while marking chore as not completed');
     }
@@ -74,7 +74,7 @@ exports.assignChore = async function (request, response) {
     try {
       // const data = await Chore.findOneAndUpdate({ name: parseName(name) }).set('assignee', parseName(user));
       const { updatedChore, data } = await pushChore(user, name);
-      response.status(200).send(`${updatedChore.name} assigned to ${parseName(data.name)}`);
+      response.status(200).send({ updatedChore, data });
     } catch (error) {
       console.log(error);
       response.status(400).send('Something went wrong while assigning chore');
@@ -90,7 +90,7 @@ exports.unassignChore = async function (request, response) {
   } else {
     try {
       const { updatedChore, data } = await removeChore(user, name);
-      response.status(200).send(`${updatedChore.name} Unassigned from ${parseName(data.name)}`);
+      response.status(200).send({ updatedChore, data });
     } catch (error) {
       console.log(error);
       response.status(400).send('Something went wrong while unassigning chore');

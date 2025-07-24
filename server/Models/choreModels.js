@@ -37,8 +37,11 @@ const Chore = mongoose.model('Chore', ChoreSchema);
 //TODO find the correct chore, invoke this function in choreController - done i think?
 const pushChore = async function (user, choreName) {
   try {
-    const updatedChore = await Chore.findOneAndUpdate({ name: parseName(choreName) }).set('assignee', parseName(user));
-    const data = await User.findOneAndUpdate({ name: parseName(user) }, { $push: { 'assignedChores': updatedChore.name } }, { new: true })
+    const updatedChore = await Chore.findOneAndUpdate({ name: parseName(choreName) }, { $set: { 'assignee': parseName(user) } }, { new: true });
+    const data = await User.findOneAndUpdate({ name: parseName(user) }, { $push: { 'assignedChores': updatedChore.name } }, { new: true });
+    console.log(user);
+    console.log(parseName(user));
+    console.log(updatedChore);
     return { updatedChore, data };
   } catch (error) {
     console.error('Something went wrong while assigning chore to user chore list', error);
@@ -46,9 +49,10 @@ const pushChore = async function (user, choreName) {
   }
 };
 
+//TODO refactor this to follow pushCore
 const removeChore = async function (user, choreName) {
   try {
-    const updatedChore = await Chore.findOneAndUpdate({ name: parseName(choreName) }).set('assignee', 'Unassigned');
+    const updatedChore = await Chore.findOneAndUpdate({ name: parseName(choreName) }, { $set: { 'assignee': 'Unassigned' } }, { new: true });
     const data = await User.findOneAndUpdate({ name: parseName(user) }, { $pull: { 'assignedChores': updatedChore.name } }, { new: true })
     return { updatedChore, data };
   } catch (error) {
