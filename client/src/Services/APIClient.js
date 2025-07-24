@@ -42,6 +42,18 @@ export async function getCurrentUser() {
   }
 }
 
+export async function getAllUsers() {
+  try {
+    const response = await fetch(`${baseUrl}/users`, {
+      method: "GET",
+    });
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.log(error);
+  }
+}
+
 //TODO need to get :user and :name from other places and find a way to put them as params for request here
 
 export async function assignChore(user, name) {

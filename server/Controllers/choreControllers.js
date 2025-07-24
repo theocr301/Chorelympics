@@ -2,7 +2,6 @@ const { Chore, pushChore, removeChore } = require('../Models/choreModels.js');
 const { parseName } = require('../utils.js');
 
 //TODO add sanity checks for duplicate entries, especially for assign and unassign
-//TODO 
 
 exports.getAllChores = async function (request, response) {
   try {

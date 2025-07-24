@@ -8,7 +8,6 @@ export default function LandingPage({user, setUser}) {
 
   async function handleSubmit(event) {
     event.preventDefault();
-    console.log(userName);
     const newUser = await generateUser(userName);
     setUser(newUser);
     const pathingHelper = userName.toLowerCase();

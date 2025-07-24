@@ -3,10 +3,13 @@ import { getAllChores } from '../../Services/APIClient.js'
 import ChoreItem from '../ChoreItem/ChoreItem.jsx'
 import './ChoreList.css';
 import { useParams } from 'react-router';
+import { useNavigate } from 'react-router';
+import Leaderboard from '../Leaderboard/Leaderboard.jsx';
 
 export default function ChoreList() {
   const [choreList, setChoreList] = useState([]);
   const { user } = useParams();
+  const navigate = useNavigate();
 
   useEffect(() => {
     getAllChores().then(setChoreList);
@@ -16,11 +19,31 @@ export default function ChoreList() {
     <>
       <div id="List">
         <div className="ChoreList">
-          <div>
-            {choreList.map(choreItem => (
+          <div className="UnassignedChores">
+            Open Chores
+            {choreList.filter(choreItem => choreItem.assignee === 'Unassigned').map(choreItem => (
               <ChoreItem key={choreItem._id} choreItem={choreItem} user={user} choreList={choreList} setChoreList={setChoreList}/>
             ))}
           </div>
+          <div className="Assigned Chores">
+            Assigned Chores
+            {choreList.filter(choreItem => choreItem.assignee !== 'Unassigned').map(choreItem => (
+                <ChoreItem key={choreItem._id} choreItem={choreItem} user={user} choreList={choreList} setChoreList={setChoreList}/>
+            ))}
+          </div>
+          <div className="Completed Chores">
+            Completed Chores
+            {choreList.filter(choreItem => choreItem.isDone === true).map(choreItem => (
+                <ChoreItem key={choreItem._id} choreItem={choreItem} user={user} choreList={choreList} setChoreList={setChoreList}/>
+            ))}
+          </div>
+        </div>
+        <div className="ChangeUser">
+          <button className="changeUserButton" type="submit" onClick={() => {navigate(`/`)}}>Change User</button>
+        </div>
+        <div>
+          Leaderboard
+          <Leaderboard />
         </div>
       </div>
     </>

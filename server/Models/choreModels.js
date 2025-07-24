@@ -49,7 +49,7 @@ const pushChore = async function (user, choreName) {
   }
 };
 
-//TODO refactor this to follow pushCore
+//TODO refactor this to follow pushCore - done i think?
 const removeChore = async function (user, choreName) {
   try {
     const updatedChore = await Chore.findOneAndUpdate({ name: parseName(choreName) }, { $set: { 'assignee': 'Unassigned' } }, { new: true });
