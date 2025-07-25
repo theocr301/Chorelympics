@@ -8,7 +8,7 @@ export default function Leaderboard() {
 
   useEffect(() => {
     getAllUsers().then(setUserList);
-  }, []);
+  }, [userList]);
 
   return (
     <>

@@ -1,0 +1,20 @@
+body {
+  display: flex;
+  justify-content: center;
+  margin: 10px;
+  padding: 20px;
+  max-width: 100%;
+  max-height: 100%;
+}
+
+.body-container {
+  /*
+  border: red 2px solid;
+  */
+  position: relative;
+  margin: 10px;
+  padding: 20px;
+  top: 100px;
+  max-height: 100%;
+  max-width: 100%;
+}

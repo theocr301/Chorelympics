@@ -4,3 +4,16 @@
   justify-content: space-evenly;
   border: blue 2px solid;
 }
+
+.List {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  border: pink 2px solid;
+}
+
+.UserProfile {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}

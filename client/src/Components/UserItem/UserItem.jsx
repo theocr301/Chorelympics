@@ -1,6 +1,7 @@
+import { getAllUsers } from '../../Services/APIClient';
 import './UserItem.css';
 
-export default function UsereItem({userItem, userList, setUserList}) {
+export default function UserItem({userItem, userList, setUserList}) {
 
   return (
     <>
@@ -9,10 +10,8 @@ export default function UsereItem({userItem, userList, setUserList}) {
         <div>{userItem.name}</div>
       </div>
       <div className="user-details">
-        <div>{userItem.difficulty}</div>
-        <div>{userItem.duration}</div>
         <div>{userItem.pointReward}</div>
-        <div>{userItem.assignee}</div>
+        <div>{userItem.assignedChores}</div>
       </div>
     </div>
     </>

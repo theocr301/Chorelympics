@@ -1,5 +1,5 @@
 import './ChoreItem.css';
-import { assignChore, unassignChore } from '../../Services/APIClient.js';
+import { assignChore, completeChore, unassignChore, reopenChore } from '../../Services/APIClient.js';
 import { useState } from 'react';
 
 export default function ChoreItem({user, choreItem, choreList, setChoreList}) {
@@ -34,6 +34,36 @@ export default function ChoreItem({user, choreItem, choreList, setChoreList}) {
     });
   }
 
+  async function handleComplete(event) {
+    const completed = await completeChore(user, choreItem.name);
+    setChoreList(oldChoreList => {
+      const updatedChoreList = [];
+      for (let i = 0; i < oldChoreList.length; i++) {
+        if (oldChoreList[i].name === completed.updatedChore.name) {
+          updatedChoreList[i] = completed.updatedChore
+        } else {
+          updatedChoreList[i] = oldChoreList[i]
+        }
+      }
+      return updatedChoreList;
+    });
+  };
+
+  async function handleReopen(event) {
+    const reopened = await reopenChore(user, choreItem.name);
+    setChoreList(oldChoreList => {
+      const updatedChoreList = [];
+      for (let i = 0; i < oldChoreList.length; i++) {
+        if (oldChoreList[i].name === reopened.updatedChore.name) {
+          updatedChoreList[i] = reopened.updatedChore
+        } else {
+          updatedChoreList[i] = oldChoreList[i]
+        }
+      }
+      return updatedChoreList;
+    });
+  };
+
   return (
     <>
     <div className="individual-chore">
@@ -45,8 +75,10 @@ export default function ChoreItem({user, choreItem, choreList, setChoreList}) {
         <div>Duration: {choreItem.duration}</div>
         <div>Reward: {choreItem.pointReward}</div>
         <div>Assignee: {choreItem.assignee}</div>
-        <button className="choreButton" onClick={() => handleAssign()}>Assign</button>
-        <button className="choreButton" onClick={() => handleUnassign()}>Unassign</button>
+        <button className="choreButtonAssign" onClick={() => handleAssign()}>Assign</button>
+        <button className="choreButtonUnassign" onClick={() => handleUnassign()}>Unassign</button>
+        <button className="choreButtonComplete" onClick={() => handleComplete()}>Complete</button>
+        <button className="choreButtonReopen" onClick={() => handleReopen()}>Reopen</button>
       </div>
     </div>
     </>

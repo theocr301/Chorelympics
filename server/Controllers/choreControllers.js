@@ -1,4 +1,4 @@
-const { Chore, pushChore, removeChore } = require('../Models/choreModels.js');
+const { Chore, pushChore, removeChore, closeChore, reopenChore } = require('../Models/choreModels.js');
 const { parseName } = require('../utils.js');
 
 //TODO add sanity checks for duplicate entries, especially for assign and unassign
@@ -34,14 +34,14 @@ exports.generateChore = async function (request, response) {
 };
 
 exports.markChoreComplete = async function (request, response) {
-  const { name } = request.params;
+  const { user, name } = request.params;
 
-  if (!name || typeof name !== 'string') {
+  if (!name || typeof name !== 'string' || !user || typeof user !== 'string') {
     response.status(400).send('Bad Request, Name is required and must be a string');
   } else {
     try {
-      const data = await Chore.findOneAndUpdate({ name: parseName(name) }).set('isDone', true);
-      response.status(200).send(data);
+      const { updatedChore, data } = await closeChore(user, name);
+      response.status(200).send({ updatedChore, data });
     } catch (error) {
       response.status(400).send('Something went wrong while marking chore as completed');
     }
@@ -49,14 +49,14 @@ exports.markChoreComplete = async function (request, response) {
 };
 
 exports.markChoreNotComplete = async function (request, response) {
-  const { name } = request.params;
+  const { user, name } = request.params;
 
-  if (!name || typeof name !== 'string') {
+  if (!name || typeof name !== 'string' || !user || typeof user !== 'string') {
     response.status(400).send('Bad Request, Name is required and must be a string');
   } else {
     try {
-      const data = await Chore.findOneAndUpdate({ name: parseName(name) }).set('isDone', false);
-      response.status(200).send(data);
+      const { updatedChore, data } = await reopenChore(user, name);
+      response.status(200).send({ updatedChore, data });
     } catch (error) {
       response.status(400).send('Something went wrong while marking chore as not completed');
     }
@@ -71,7 +71,6 @@ exports.assignChore = async function (request, response) {
     response.status(400).send('Bad Request, Name or User is required and must be a string');
   } else {
     try {
-      // const data = await Chore.findOneAndUpdate({ name: parseName(name) }).set('assignee', parseName(user));
       const { updatedChore, data } = await pushChore(user, name);
       response.status(200).send({ updatedChore, data });
     } catch (error) {

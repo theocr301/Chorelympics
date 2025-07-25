@@ -85,3 +85,33 @@ export async function unassignChore(user, name) {
     console.log('Error assigning chore');
   }
 }
+
+export async function completeChore(user, name) {
+  const parsedUser = user.toLowerCase();
+  const parsedName = name.toLowerCase();
+  try {
+    const response = await fetch(`${baseUrl}/${parsedUser}/chores/markcomplete/${parsedName}`, {
+      method: "PUT",
+    });
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.log(error);
+    console.log('Error completing chore');
+  }
+}
+
+export async function reopenChore(user, name) {
+  const parsedUser = user.toLowerCase();
+  const parsedName = name.toLowerCase();
+  try {
+    const response = await fetch(`${baseUrl}/${parsedUser}/chores/marknotcomplete/${parsedName}`, {
+      method: "PUT",
+    });
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.log(error);
+    console.log('Error reopening chore');
+  }
+}

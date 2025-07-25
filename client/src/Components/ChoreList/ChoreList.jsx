@@ -17,17 +17,21 @@ export default function ChoreList() {
 
   return (
     <>
-      <div id="List">
+      <div className="List">
+        <div className="UserProfile">
+          {user}
+          <button className="changeUserButton" type="submit" onClick={() => {navigate(`/`)}}>Change User</button>
+        </div>
         <div className="ChoreList">
           <div className="UnassignedChores">
             Open Chores
-            {choreList.filter(choreItem => choreItem.assignee === 'Unassigned').map(choreItem => (
+            {choreList.filter(choreItem => choreItem.assignee === 'Unassigned' && choreItem.isDone === false).map(choreItem => (
               <ChoreItem key={choreItem._id} choreItem={choreItem} user={user} choreList={choreList} setChoreList={setChoreList}/>
             ))}
           </div>
           <div className="Assigned Chores">
-            Assigned Chores
-            {choreList.filter(choreItem => choreItem.assignee !== 'Unassigned').map(choreItem => (
+            My Open Chores
+            {choreList.filter(choreItem => choreItem.assignee !== 'Unassigned' && choreItem.isDone === false).map(choreItem => (
                 <ChoreItem key={choreItem._id} choreItem={choreItem} user={user} choreList={choreList} setChoreList={setChoreList}/>
             ))}
           </div>
@@ -38,10 +42,7 @@ export default function ChoreList() {
             ))}
           </div>
         </div>
-        <div className="ChangeUser">
-          <button className="changeUserButton" type="submit" onClick={() => {navigate(`/`)}}>Change User</button>
-        </div>
-        <div>
+        <div className="Leaderboard-container">
           Leaderboard
           <Leaderboard />
         </div>

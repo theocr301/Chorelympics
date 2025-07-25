@@ -39,9 +39,6 @@ const pushChore = async function (user, choreName) {
   try {
     const updatedChore = await Chore.findOneAndUpdate({ name: parseName(choreName) }, { $set: { 'assignee': parseName(user) } }, { new: true });
     const data = await User.findOneAndUpdate({ name: parseName(user) }, { $push: { 'assignedChores': updatedChore.name } }, { new: true });
-    console.log(user);
-    console.log(parseName(user));
-    console.log(updatedChore);
     return { updatedChore, data };
   } catch (error) {
     console.error('Something went wrong while assigning chore to user chore list', error);
@@ -59,7 +56,33 @@ const removeChore = async function (user, choreName) {
     console.error('Something went wrong while unassigning chore from user chore list', error);
     return error;
   }
-}
+};
+
+const closeChore = async function (user, choreName) {
+  try {
+    const updatedChore = await Chore.findOneAndUpdate({ name: parseName(choreName) }, { $set: { 'isDone': true } }, { new: true });
+    const userData = await User.findOne({ name: parseName(user) });
+    const updatedPoints = userData.pointReward + updatedChore.pointReward;
+    const data = await User.findOneAndUpdate({ name: parseName(user) }, { $set: { 'pointReward': updatedPoints }}, { new: true });
+    return { updatedChore, data };
+  } catch (error) {
+    console.error('Something went wrong while marking chore as complete', error);
+    return error;
+  }
+};
+
+const reopenChore = async function (user, choreName) {
+  try {
+    const updatedChore = await Chore.findOneAndUpdate({ name: parseName(choreName) }, { $set: { 'isDone': false } }, { new: true });
+    const userData = await User.findOne({ name: parseName(user) });
+    const updatedPoints = userData.pointReward - updatedChore.pointReward;
+    const data = await User.findOneAndUpdate({ name: parseName(user) }, { $set: { 'pointReward': updatedPoints } }, { new: true });
+    return { updatedChore, data };
+  } catch (error) {
+    console.error('Something went wrong while reopening the chore', error);
+    return error;
+  }
+};
 
 main().catch(error => console.log(error));
 
@@ -68,4 +91,4 @@ async function main() {
   console.log(`DB connection established successfully!`);
 };
 
-module.exports = { Chore, pushChore, removeChore };
+module.exports = { Chore, pushChore, removeChore, closeChore, reopenChore };
