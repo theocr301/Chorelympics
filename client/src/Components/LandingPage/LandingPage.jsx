@@ -6,7 +6,7 @@ import spongyImage from '../../assets/Spongy.png';
 
 export default function LandingPage({setUser}) {
   const [userName, setUserName] = useState('');
-  let navigate = useNavigate();
+  const navigate = useNavigate();
 
   async function handleSubmit(event) {
     event.preventDefault();
@@ -26,7 +26,7 @@ export default function LandingPage({setUser}) {
     <>
     <img src={spongyImage} className="spongy"></img>
       <div className="form-container">
-        <span className="nameQuestion">What is your name?</span>
+        <span className="nameQuestion">What's your name?</span>
         <form className="submit-form" type="submit" onSubmit={handleSubmit}>
           <input name="nameInput" className="inputBox" value={userName} onChange={handleNameChange} required></input>
           <button className="formButton" type="submit">Continue</button>

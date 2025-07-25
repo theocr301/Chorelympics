@@ -36,7 +36,20 @@ export async function getCurrentUser() {
       headers: {"Content-Type": "application/json"}
     });
     const data = await response.json();
-    return data;
+    return data[0];
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+export async function logoutUser(user) {
+  try {
+    const response = await fetch(`${baseUrl}/users/logout/${user}`, {
+      method: "PUT",
+      headers: {"Content-Type": "application/json"}
+    });
+    const data = await response.text();
+    return data[0];
   } catch (error) {
     console.log(error);
   }

@@ -5,8 +5,8 @@
   position: absolute;
   width: 550px;
   height: 300px;
-  top: 10em;
-  right: -20em;
+  top: 17em;
+  right: -19em;
   align-items: center;
   background-color: rgba(255, 230, 200, 1);
   opacity: 1;
@@ -30,8 +30,8 @@
   position: absolute;
   width: 200px;
   height: auto;
-  left: 5px;
-  top: 40px;
+  left: 6em;
+  top: 9.4em;
 }
 
 .formButton {
@@ -46,6 +46,15 @@
   border-radius: 16px;
   border-width: 2px;
   box-shadow: rgba(109, 82, 119, 1) 3px 3px;
+}
+
+.formButton:hover {
+  cursor: pointer;
+  background-color: rgba(255, 170, 30, 1);
+  border-color: rgba(255, 170, 30, 1);
+  box-shadow:
+    rgba(109, 82, 119, 1) 3px 3px,
+    0 0 8px rgba(255, 194, 77, 0.7);
 }
 
 .nameQuestion {

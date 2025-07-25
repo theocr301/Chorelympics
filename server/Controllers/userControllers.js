@@ -1,4 +1,5 @@
 const User = require('../Models/userModels.js');
+const { parseName } = require('../utils.js');
 
 exports.getAllUsers = async function (request, response) {
   try {
@@ -31,8 +32,9 @@ exports.generateUser = async function (request, response) {
   try {
     var responseData = {};
     const userData = await User.find({});
-    const found = userData.find((element) => element.name === name);
+    var found = userData.find((element) => element.name === name);
     if (found) {
+      found = await User.findOneAndUpdate({ name: parseName(name) }, { $set: { 'isCurrent': true } }, { new: true })
       responseData = found;
     } else {
       responseData = await User.insertOne(request.body);
@@ -43,3 +45,16 @@ exports.generateUser = async function (request, response) {
     response.status(400).send('Something went wrong while creating the user, it might already exist in the DB');
   }
 };
+
+exports.logoutUser = async function (request, response) {
+  const { user } = request.params;
+
+  try {
+    const data = await User.findOneAndUpdate({ name: parseName(user) }, { $set: { 'isCurrent': false } }, { new: true })
+    response.status(200);
+    response.send(data);
+  } catch (error) {
+    response.status(400);
+    response.send(error);
+  }
+}
