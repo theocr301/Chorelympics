@@ -8,7 +8,7 @@ import Leaderboard from '../Leaderboard/Leaderboard.jsx';
 
 export default function ChoreList() {
   const [choreList, setChoreList] = useState([]);
-  const [currentUser, setCurrentUser] = useState(null);
+  const [currentUser, setCurrentUser] = useState({});
   const { user } = useParams();
   const navigate = useNavigate();
   const myProfile = user.charAt(0).toUpperCase() + user.slice(1)
@@ -27,12 +27,12 @@ export default function ChoreList() {
     <>
       <div className="List">
         <div className="UserProfile">
-          <div>
+          <div className="MyProfile">
             {myProfile}
             <button className="changeUserButton" type="submit" onClick={handleLogout}>Change User</button>
           </div>
-          <div>
-            
+          <div className="MyPoints">
+            {currentUser.pointReward}
           </div>
         </div>
         <div className="main-wrapper">

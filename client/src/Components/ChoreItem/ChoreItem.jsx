@@ -68,12 +68,14 @@ export default function ChoreItem({user, choreItem, setChoreList}) {
     <div className="individual-chore">
       <div className="chore-name">
         <div>{choreItem.name}</div>
+        <div>Assignee: {choreItem.assignee}</div>
       </div>
       <div className="chore-details">
         <div>Difficulty: {choreItem.difficulty}</div>
         <div>Duration: {choreItem.duration}</div>
         <div>Reward: {choreItem.pointReward}</div>
-        <div>Assignee: {choreItem.assignee}</div>
+      </div>
+      <div className="chore-buttons">
         <button className="choreButtonAssign" onClick={() => handleAssign()}>Assign</button>
         <button className="choreButtonUnassign" onClick={() => handleUnassign()}>Unassign</button>
         <button className="choreButtonComplete" onClick={() => handleComplete()}>Complete</button>

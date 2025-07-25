@@ -10,7 +10,6 @@ export default function UserItem({userItem}) {
       </div>
       <div className="user-details">
         <div>{userItem.pointReward}</div>
-        <div>{userItem.assignedChores}</div>
       </div>
     </div>
     </>

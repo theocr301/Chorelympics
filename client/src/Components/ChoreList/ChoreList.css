@@ -1,6 +1,9 @@
 .ChoreList {
   display: flex;
-  justify-content: space-evenly;
+  width: 70vw;
+  max-width: 70vw;
+  padding: 10px;
+  justify-content: space-around;
   border: blue 2px solid;
 }
 
@@ -22,12 +25,29 @@
 
 .UserProfile {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   align-items: start;
+  justify-content: space-between;
+  border: red 2px solid;
+}
+
+.MyProfile {
+  display: flex;
+  flex-direction: column;
 }
 
 .main-wrapper {
   display: flex;
+  position: inherit;
   flex-direction: row;
   justify-content: space-around;
+  top: 10em;
+  width: 100vw;
+  height: max-content;
+}
+
+.Leaderboard-container {
+  border: green 2px solid;
+  width: 15vw;
+  padding: 10px;
 }
