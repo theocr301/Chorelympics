@@ -16,7 +16,7 @@ export default function Leaderboard() {
         <div className="Leaderboard">
           <div>
             {userList.map(userItem => (
-              <UserItem key={userItem._id} userItem={userItem} userList={userList} setUserList={setUserList}/>
+              <UserItem key={userItem._id} userItem={userItem}/>
             ))}
           </div>
         </div>

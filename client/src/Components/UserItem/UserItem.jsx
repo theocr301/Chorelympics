@@ -1,7 +1,6 @@
-import { getAllUsers } from '../../Services/APIClient';
 import './UserItem.css';
 
-export default function UserItem({userItem, userList, setUserList}) {
+export default function UserItem({userItem}) {
 
   return (
     <>

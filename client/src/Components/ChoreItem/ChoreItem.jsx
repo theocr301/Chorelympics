@@ -1,8 +1,7 @@
 import './ChoreItem.css';
 import { assignChore, completeChore, unassignChore, reopenChore } from '../../Services/APIClient.js';
-import { useState } from 'react';
 
-export default function ChoreItem({user, choreItem, choreList, setChoreList}) {
+export default function ChoreItem({user, choreItem, setChoreList}) {
 
   async function handleAssign(event) {
     const assigned = await assignChore(user, choreItem.name);

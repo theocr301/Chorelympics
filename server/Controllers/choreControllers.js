@@ -1,5 +1,4 @@
 const { Chore, pushChore, removeChore, closeChore, reopenChore } = require('../Models/choreModels.js');
-const { parseName } = require('../utils.js');
 
 //TODO add sanity checks for duplicate entries, especially for assign and unassign
 
@@ -9,7 +8,7 @@ exports.getAllChores = async function (request, response) {
     response.status(200);
     response.send(data);
   } catch (error) {
-    response.status(400);
+    response.status(400).send(error);
   }
 };
 
@@ -43,7 +42,7 @@ exports.markChoreComplete = async function (request, response) {
       const { updatedChore, data } = await closeChore(user, name);
       response.status(200).send({ updatedChore, data });
     } catch (error) {
-      response.status(400).send('Something went wrong while marking chore as completed');
+      response.status(400).send(error);
     }
   }
 };
@@ -58,7 +57,7 @@ exports.markChoreNotComplete = async function (request, response) {
       const { updatedChore, data } = await reopenChore(user, name);
       response.status(200).send({ updatedChore, data });
     } catch (error) {
-      response.status(400).send('Something went wrong while marking chore as not completed');
+      response.status(400).send(error);
     }
   }
 };

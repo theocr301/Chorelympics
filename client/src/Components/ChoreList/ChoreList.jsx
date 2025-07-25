@@ -26,19 +26,19 @@ export default function ChoreList() {
           <div className="UnassignedChores">
             Open Chores
             {choreList.filter(choreItem => choreItem.assignee === 'Unassigned' && choreItem.isDone === false).map(choreItem => (
-              <ChoreItem key={choreItem._id} choreItem={choreItem} user={user} choreList={choreList} setChoreList={setChoreList}/>
+              <ChoreItem key={choreItem._id} choreItem={choreItem} user={user} setChoreList={setChoreList}/>
             ))}
           </div>
           <div className="Assigned Chores">
             My Open Chores
             {choreList.filter(choreItem => choreItem.assignee !== 'Unassigned' && choreItem.isDone === false).map(choreItem => (
-                <ChoreItem key={choreItem._id} choreItem={choreItem} user={user} choreList={choreList} setChoreList={setChoreList}/>
+                <ChoreItem key={choreItem._id} choreItem={choreItem} user={user} setChoreList={setChoreList}/>
             ))}
           </div>
           <div className="Completed Chores">
             Completed Chores
             {choreList.filter(choreItem => choreItem.isDone === true).map(choreItem => (
-                <ChoreItem key={choreItem._id} choreItem={choreItem} user={user} choreList={choreList} setChoreList={setChoreList}/>
+                <ChoreItem key={choreItem._id} choreItem={choreItem} user={user} setChoreList={setChoreList}/>
             ))}
           </div>
         </div>

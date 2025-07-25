@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router';
 import './LandingPage.css';
 import spongyImage from '../../assets/Spongy.png';
 
-export default function LandingPage({user, setUser}) {
+export default function LandingPage({setUser}) {
   const [userName, setUserName] = useState('');
   let navigate = useNavigate();
 
