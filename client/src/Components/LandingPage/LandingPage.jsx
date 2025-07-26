@@ -30,7 +30,7 @@ export default function LandingPage({setUser}) {
         <span className="nameQuestion">What's your name?</span>
         <form className="submit-form" type="submit" onSubmit={handleSubmit}>
           <input name="nameInput" className="inputBox" value={userName} onChange={handleNameChange} required></input>
-          <button className="formButton" type="submit">Continue</button>
+          <button className="formButton" type="submit">CONTINUE</button>
         </form>
       </div>
     </div>

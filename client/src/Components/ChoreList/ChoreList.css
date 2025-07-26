@@ -12,6 +12,7 @@
 
 .List {
   position: relative;
+  padding-top: 24px;
   top: 0;
   left: 0;
   width: 100dvw;
@@ -49,9 +50,10 @@
 .Leaderboard-container {
   background-color: rgba(245, 245, 245, 1);
   width: 15vw;
-  padding: 10px;
+  padding: 20px;
   border-radius: 14px;
   margin-right: 1em;
+  height: 700px;
 }
 
 .UnassignedChores {
@@ -106,22 +108,23 @@
   display: flex;
   flex-direction: row;
   margin-top: 10px;
-  margin-left: 20px;
+  margin-left: 10px;
 }
 
 .user-name {
-  margin-top: 10px;
+  font-size: 32px;
   margin-left: 10px;
 }
 
 .changeUserButton {
   margin-left: 10px;
+  padding: 8px;
   font-size: 15px;
   font-family: "Jua";
   background-color: rgba(255, 194, 77, 1);
   border-color: rgba(255, 194, 77, 1);
   color: white;
-  border-radius: 16px;
+  border-radius: 10px;
   border-width: 2px;
   box-shadow: rgba(109, 82, 119, 1) 3px 3px;
 }
@@ -136,15 +139,15 @@
 }
 
 .create-chore-button {
-  font-size: 17px;
+  font-size: 15px;
   font-family: "Jua";
   padding-left: 20px;
   padding-right: 20px;
-  margin-bottom: 10px;
+  margin-bottom: 20px;
   background-color: rgba(255, 194, 77, 1);
   border-color: rgba(255, 194, 77, 1);
   color: white;
-  border-radius: 16px;
+  border-radius: 10px;
   border-width: 2px;
   box-shadow: rgba(109, 82, 119, 1) 3px 3px;
 }

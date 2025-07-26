@@ -36,7 +36,7 @@ export default function ChoreList() {
                 {myProfile}
               </div>
             </div>
-            <button className="changeUserButton" type="submit" onClick={handleLogout}>Change User</button>
+            <button className="changeUserButton" type="submit" onClick={handleLogout}>CHANGE USER</button>
           </div>
           <div className="MyPoints">
             <div class="Coin"></div>
@@ -47,7 +47,7 @@ export default function ChoreList() {
           <div className="ChoreList">
             <div className="chorelist-header">
             <h3>Chores</h3>
-            <button className="create-chore-button">Add New Chore</button>
+            <button className="create-chore-button">ADD NEW CHORE</button>
             </div>
             <div className="chorelist-body">
 

@@ -42,10 +42,9 @@
   background-color: rgba(255, 194, 77, 1);
   border-color: rgba(255, 194, 77, 1);
   color: white;
-  border-radius: 13px;
+  border-radius: 10px;
   width: 150px;
   height: 40px;
-  border-radius: 16px;
   border-width: 2px;
   box-shadow: rgba(109, 82, 119, 1) 3px 3px;
 }

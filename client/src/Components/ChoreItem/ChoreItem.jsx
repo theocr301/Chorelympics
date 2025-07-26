@@ -76,18 +76,18 @@ export default function ChoreItem({user, choreItem, setChoreList}) {
       </div>
       <div className="chore-buttons">
         {choreItem.assignee === "Unassigned" && !choreItem.isDone && (
-          <button className="choreButtonAssign" onClick={handleAssign}>Assign to me</button>
+          <button className="choreButtonAssign" onClick={handleAssign}>ASSIGN TO ME</button>
         )}
 
         {choreItem.assignee !== "Unassigned" && !choreItem.isDone && (
           <>
-            <button className="choreButtonUnassign" onClick={handleUnassign}>Unassign</button>
-            <button className="choreButtonComplete" onClick={handleComplete}>Mark as done</button>
+            <button className="choreButtonUnassign" onClick={handleUnassign}>UNASSIGN</button>
+            <button className="choreButtonComplete" onClick={handleComplete}>MARK AS DONE</button>
           </>
         )}
 
         {choreItem.isDone && (
-          <button className="choreButtonReopen" onClick={handleReopen}>Reopen</button>
+          <button className="choreButtonReopen" onClick={handleReopen}>REOPEN</button>
         )}
       </div>
     </div>
