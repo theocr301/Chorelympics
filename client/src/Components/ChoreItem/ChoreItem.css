@@ -25,6 +25,7 @@
 }
 
 .choreButtonAssign {
+  cursor: pointer;
   border: 2px solid rgba(143, 82, 77, 1);
   border-radius: 8px;
   padding-left: 5em;
@@ -35,6 +36,7 @@
 }
 
 .choreButtonUnassign {
+  cursor: pointer;
   border: 2px solid rgba(143, 82, 77, 1);
   border-radius: 8px;
   padding-left: 5em;
@@ -45,6 +47,7 @@
 }
 
 .choreButtonComplete {
+  cursor: pointer;
   border: 2px solid rgba(143, 82, 77, 1);
   border-radius: 8px;
   padding-left: 5em;
@@ -55,6 +58,7 @@
 }
 
 .choreButtonReopen {
+  cursor: pointer;
   border: 2px solid rgba(143, 82, 77, 1);
   border-radius: 8px;
   padding-left: 5em;
