@@ -192,3 +192,11 @@
 }
 
 /*TODO only the css above so far */
+
+.chore-header {
+  position: sticky;
+  top: -20px;
+  z-index: 10;
+  background-color: white;
+  padding: 10px;
+}

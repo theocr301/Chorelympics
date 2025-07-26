@@ -52,19 +52,19 @@ export default function ChoreList() {
             <div className="chorelist-body">
 
             <div className="UnassignedChores">
-              <h4>Unassigned</h4>
+              <div className="chore-header">Unassigned</div>
               {choreList.filter(choreItem => choreItem.assignee === 'Unassigned' && choreItem.isDone === false).map(choreItem => (
                 <ChoreItem key={choreItem._id} choreItem={choreItem} user={user} setChoreList={setChoreList}/>
               ))}
             </div>
             <div className="AssignedChores">
-              <h4>To Do</h4>
+              <div className="chore-header">To Do</div>
               {choreList.filter(choreItem => choreItem.assignee !== 'Unassigned' && choreItem.isDone === false).map(choreItem => (
                 <ChoreItem key={choreItem._id} choreItem={choreItem} user={user} setChoreList={setChoreList}/>
               ))}
             </div>
             <div className="CompletedChores">
-              <h4>Done</h4>
+              <div className="chore-header">Done</div>
               {choreList.filter(choreItem => choreItem.isDone === true).map(choreItem => (
                 <ChoreItem key={choreItem._id} choreItem={choreItem} user={user} setChoreList={setChoreList}/>
               ))}
