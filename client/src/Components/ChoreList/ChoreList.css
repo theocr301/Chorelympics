@@ -52,7 +52,6 @@
   width: 15vw;
   padding: 20px;
   border-radius: 14px;
-  margin-right: 1em;
   height: 700px;
 }
 
@@ -96,9 +95,11 @@
 }
 
 .chorelist-body {
+  margin-left: 24px;
+  margin-right: 24px;
   display: flex;
   flex-direction: row;
-  justify-content: space-evenly;
+  justify-content: space-between;
   flex: 1;
   overflow: auto;
   max-height: 70vh;
@@ -141,9 +142,9 @@
 .create-chore-button {
   font-size: 15px;
   font-family: "Jua";
-  padding-left: 20px;
-  padding-right: 20px;
+  padding: 10px;
   margin-bottom: 20px;
+  margin-right: 20px;
   background-color: rgba(255, 194, 77, 1);
   border-color: rgba(255, 194, 77, 1);
   color: white;
@@ -199,4 +200,10 @@
   z-index: 10;
   background-color: white;
   padding: 10px;
+}
+
+.chorely {
+  margin-left: 15px;
+  margin-top: 10px;
+  font-size: 24px;
 }

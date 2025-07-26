@@ -46,7 +46,7 @@ export default function ChoreList() {
         <div className="main-wrapper">
           <div className="ChoreList">
             <div className="chorelist-header">
-            <h3>Chores</h3>
+            <div className="chorely">Chores</div>
             <button className="create-chore-button">ADD NEW CHORE</button>
             </div>
             <div className="chorelist-body">
