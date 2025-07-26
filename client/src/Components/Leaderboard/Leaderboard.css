@@ -1,0 +1,12 @@
+.Leaderboard {
+  display: flex;
+  flex-direction: column;
+  background-color: rgba(255, 255, 255, 1);
+  border-width: 2px, 2px, 4px, 2px;
+  border-color: rgba(229, 229, 229, 1);
+  border-radius: 10px;
+  border-style: solid;
+  padding: 10px;
+}
+
+

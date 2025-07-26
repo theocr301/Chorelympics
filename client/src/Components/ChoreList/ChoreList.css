@@ -1,22 +1,23 @@
 .ChoreList {
   display: flex;
-  width: 70vw;
-  max-width: 70vw;
+  flex-direction: column;
+  width: 75vw;
+  max-width: 75vw;
+  overflow: hidden;
   padding: 10px;
-  justify-content: space-around;
-  border: blue 2px solid;
+  background-color: rgba(245, 245, 245, 1);
+  border-radius: 14px;
+  margin-bottom: 5vh;
 }
 
 .List {
-  position: fixed;
+  position: relative;
   top: 0;
   left: 0;
-  width: 100vw;
+  width: 100dvw;
   height: 100vh;
   display: flex;
   flex-direction: column;
-  padding: 20px;
-  justify-content: space-between;
   box-sizing: border-box;
   border: pink 2px solid;
   font-family: "Jua";
@@ -26,28 +27,165 @@
 .UserProfile {
   display: flex;
   flex-direction: row;
-  align-items: start;
+  align-items: flex-start;
   justify-content: space-between;
-  border: red 2px solid;
 }
 
 .MyProfile {
   display: flex;
   flex-direction: column;
+  margin-left: 3.5em;
 }
 
 .main-wrapper {
   display: flex;
-  position: inherit;
+  position: relative;
   flex-direction: row;
   justify-content: space-around;
-  top: 10em;
-  width: 100vw;
-  height: max-content;
+  overflow: hidden;
+  margin-top: 2em;
 }
 
 .Leaderboard-container {
-  border: green 2px solid;
+  background-color: rgba(245, 245, 245, 1);
   width: 15vw;
   padding: 10px;
+  border-radius: 14px;
+  margin-right: 1em;
 }
+
+.UnassignedChores {
+  border-style: solid;
+  border-color: rgba(229, 229, 229, 1);
+  border-radius: 10px;
+  background-color: rgba(255, 255, 255, 1);
+  padding: 20px;
+  min-width: 25%;
+  overflow-y: auto;
+  max-height: 95%;
+}
+
+.AssignedChores {
+  border-style: solid;
+  border-color: rgba(229, 229, 229, 1);
+  border-radius: 10px;
+  background-color: rgba(255, 255, 255, 1);
+  padding: 20px;
+  min-width: 25%;
+  overflow-y: auto;
+  max-height: 95%;
+}
+
+.CompletedChores {
+  border-style: solid;
+  border-color: rgba(229, 229, 229, 1);
+  border-radius: 10px;
+  background-color: rgba(255, 255, 255, 1);
+  padding: 20px;
+  min-width: 25%;
+  overflow-y: auto;
+  max-height: 95%;
+}
+
+.chorelist-header {
+  display: flex;
+  justify-content: space-between;
+  margin: 10px;
+}
+
+.chorelist-body {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  flex: 1;
+  overflow: auto;
+  max-height: 70vh;
+}
+
+.profile-info {
+  display: flex;
+  flex-direction: row;
+  margin-top: 10px;
+  margin-left: 20px;
+}
+
+.user-name {
+  margin-top: 10px;
+  margin-left: 10px;
+}
+
+.changeUserButton {
+  margin-left: 10px;
+  font-size: 15px;
+  font-family: "Jua";
+  background-color: rgba(255, 194, 77, 1);
+  border-color: rgba(255, 194, 77, 1);
+  color: white;
+  border-radius: 16px;
+  border-width: 2px;
+  box-shadow: rgba(109, 82, 119, 1) 3px 3px;
+}
+
+.changeUserButton:hover {
+  cursor: pointer;
+  background-color: rgba(255, 170, 30, 1);
+  border-color: rgba(255, 170, 30, 1);
+  box-shadow:
+    rgba(109, 82, 119, 1) 3px 3px,
+    0 0 8px rgba(255, 194, 77, 0.7);
+}
+
+.create-chore-button {
+  font-size: 17px;
+  font-family: "Jua";
+  padding-left: 20px;
+  padding-right: 20px;
+  margin-bottom: 10px;
+  background-color: rgba(255, 194, 77, 1);
+  border-color: rgba(255, 194, 77, 1);
+  color: white;
+  border-radius: 16px;
+  border-width: 2px;
+  box-shadow: rgba(109, 82, 119, 1) 3px 3px;
+}
+
+.create-chore-button:hover {
+  cursor: pointer;
+  background-color: rgba(255, 170, 30, 1);
+  border-color: rgba(255, 170, 30, 1);
+  box-shadow:
+    rgba(109, 82, 119, 1) 3px 3px,
+    0 0 8px rgba(255, 194, 77, 0.7);
+}
+
+/*TODO change the css below */
+
+.MyPoints {
+  display: inline-flex;
+  align-items: center;
+  background: #fdfdfd;
+  padding: 6px 12px;
+  border-radius: 999px;
+  box-shadow: 2px 3px 0 #7e5f94;
+  font-family: 'Segoe UI', sans-serif;
+  margin-top: 20px;
+  margin-right: 100px;
+}
+
+.Coin {
+  width: 50px;
+  height: 50px;
+  background: radial-gradient(circle at center, #ffcc33, #ff9933);
+  border-radius: 50%;
+  border: 3px solid white;
+  box-shadow: inset 0 0 2px #c97b1d;
+  margin-right: 8px;
+}
+
+.point-value {
+  font-size: 20px;
+  color: #7e4c4c;
+  font-weight: bold;
+}
+
+/*TODO only the css above so far */

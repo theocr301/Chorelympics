@@ -1,5 +1,18 @@
 .individual-user {
   display: flex;
   flex-direction: row;
-  justify-content: space-evenly;
+  justify-content: space-between;
+}
+
+.user-details {
+  margin-top: 10px;
+}
+
+.user-display {
+  display: flex;
+}
+
+.user {
+  margin-top: 10px;
+  margin-left: 5px;
 }

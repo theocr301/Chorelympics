@@ -24,7 +24,8 @@ export default function LandingPage({setUser}) {
 
   return (
     <>
-    <img src={spongyImage} className="spongy"></img>
+    <div className="spongy-sticker">
+      <img src={spongyImage} className="spongy"></img>
       <div className="form-container">
         <span className="nameQuestion">What's your name?</span>
         <form className="submit-form" type="submit" onSubmit={handleSubmit}>
@@ -32,6 +33,7 @@ export default function LandingPage({setUser}) {
           <button className="formButton" type="submit">Continue</button>
         </form>
       </div>
+    </div>
     </>
   )
 };

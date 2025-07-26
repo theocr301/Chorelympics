@@ -28,32 +28,47 @@ export default function ChoreList() {
       <div className="List">
         <div className="UserProfile">
           <div className="MyProfile">
-            {myProfile}
+            <div className="profile-info">
+              <div className="user-avatar">
+                <img src={`/${currentUser.profilePic}`}></img>
+              </div>
+              <div className="user-name">
+                {myProfile}
+              </div>
+            </div>
             <button className="changeUserButton" type="submit" onClick={handleLogout}>Change User</button>
           </div>
           <div className="MyPoints">
-            {currentUser.pointReward}
+            <div class="Coin"></div>
+            <span class="point-value">{currentUser.pointReward}</span>
           </div>
         </div>
         <div className="main-wrapper">
           <div className="ChoreList">
+            <div className="chorelist-header">
+            <h3>Chores</h3>
+            <button className="create-chore-button">Add New Chore</button>
+            </div>
+            <div className="chorelist-body">
+
             <div className="UnassignedChores">
-              Open Chores
+              <h4>Unassigned</h4>
               {choreList.filter(choreItem => choreItem.assignee === 'Unassigned' && choreItem.isDone === false).map(choreItem => (
                 <ChoreItem key={choreItem._id} choreItem={choreItem} user={user} setChoreList={setChoreList}/>
               ))}
             </div>
-            <div className="Assigned Chores">
-              My Open Chores
+            <div className="AssignedChores">
+              <h4>To Do</h4>
               {choreList.filter(choreItem => choreItem.assignee !== 'Unassigned' && choreItem.isDone === false).map(choreItem => (
                 <ChoreItem key={choreItem._id} choreItem={choreItem} user={user} setChoreList={setChoreList}/>
               ))}
             </div>
-            <div className="Completed Chores">
-              Completed Chores
+            <div className="CompletedChores">
+              <h4>Done</h4>
               {choreList.filter(choreItem => choreItem.isDone === true).map(choreItem => (
                 <ChoreItem key={choreItem._id} choreItem={choreItem} user={user} setChoreList={setChoreList}/>
               ))}
+            </div>
             </div>
           </div>
           <div className="Leaderboard-container">

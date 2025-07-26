@@ -18,6 +18,10 @@ const UserSchema = new Schema({
   isCurrent: {
     type: Boolean,
     default: false
+  },
+  profilePic: {
+    type: String,
+    default: '../../assets/default'
   }
 });
 

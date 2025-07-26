@@ -60,10 +60,10 @@ const removeChore = async function (user, choreName) {
 
 const closeChore = async function (user, choreName) {
   try {
-    const updatedChore = await Chore.findOneAndUpdate({ name: parseName(choreName) }, { $set: { 'isDone': true } }, { new: true });
+    const updatedChore = await Chore.findOneAndUpdate({ name: parseName(choreName) }, { $set: { 'isDone': true, 'assignee': parseName(user) } }, { new: true });
     const userData = await User.findOne({ name: parseName(user) });
     const updatedPoints = userData.pointReward + updatedChore.pointReward;
-    const data = await User.findOneAndUpdate({ name: parseName(user) }, { $set: { 'pointReward': updatedPoints }}, { new: true });
+    const data = await User.findOneAndUpdate({ name: parseName(user) }, { $set: { 'pointReward': updatedPoints }, $push: { 'assignedChores': updatedChore.name }}, { new: true });
     return { updatedChore, data };
   } catch (error) {
     console.error('Something went wrong while marking chore as complete', error);
@@ -76,7 +76,7 @@ const reopenChore = async function (user, choreName) {
     const updatedChore = await Chore.findOneAndUpdate({ name: parseName(choreName) }, { $set: { 'isDone': false } }, { new: true });
     const userData = await User.findOne({ name: parseName(user) });
     const updatedPoints = userData.pointReward - updatedChore.pointReward;
-    const data = await User.findOneAndUpdate({ name: parseName(user) }, { $set: { 'pointReward': updatedPoints } }, { new: true });
+    const data = await User.findOneAndUpdate({ name: parseName(user) }, { $set: { 'pointReward': updatedPoints }}, { new: true });
     return { updatedChore, data };
   } catch (error) {
     console.error('Something went wrong while reopening the chore', error);
