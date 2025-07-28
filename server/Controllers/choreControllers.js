@@ -1,4 +1,5 @@
 const { Chore, pushChore, removeChore, closeChore, reopenChore } = require('../Models/choreModels.js');
+const { parseName } = require('../utils.js');
 
 //TODO add sanity checks for duplicate entries, especially for assign and unassign
 
@@ -13,18 +14,26 @@ exports.getAllChores = async function (request, response) {
 };
 
 exports.generateChore = async function (request, response) {
-  const { name, difficulty, duration } = request.body;
+  const { name, difficulty } = request.body;
 
   if (!name || typeof name !== 'string') {
     response.status(400).send('Bad Request, Name is required, must be a string and different from existing entries');
-  } else if (!difficulty || typeof difficulty !== 'number') {
+  } else if (!difficulty || typeof difficulty !== 'string') {
     response.status(400).send('Bad Request, Difficulty is a number required for point reward calculation');
-  } else if (!duration || typeof duration !== 'number') {
-    response.status(400).send('Bad Request, Duration is a number required for point reward calculation');
+  /* } else if (!duration || typeof duration !== 'number') {
+    response.status(400).send('Bad Request, Duration is a number required for point reward calculation'); */
   } else {
     try {
-      const data = await Chore.insertOne(request.body);
-      response.status(201).send(data); 
+      if (difficulty === 'medium') {
+        const data = await Chore.insertOne({ name: parseName(name), difficulty: parseName(difficulty), pointReward: 200 });
+        response.status(201).send(data); 
+      } else if (difficulty === 'hard') {
+        const data = await Chore.insertOne({ name: parseName(name), difficulty: parseName(difficulty), pointReward: 300 });
+        response.status(201).send(data);
+      } else {
+        const data = await Chore.insertOne({ name: parseName(name), difficulty: parseName(difficulty), pointReward: 100 });
+        response.status(201).send(data);
+      }
     } catch (error) {
       console.log(error);
       response.status(400).send('Something went wrong while creating the chore, it might already exist in the DB');

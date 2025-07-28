@@ -5,17 +5,23 @@ import './ChoreList.css';
 import { useParams } from 'react-router';
 import { useNavigate } from 'react-router';
 import Leaderboard from '../Leaderboard/Leaderboard.jsx';
+import AddNewChore from '../AddNewChore/AddNewChore.jsx';
 
 export default function ChoreList() {
   const [choreList, setChoreList] = useState([]);
   const [currentUser, setCurrentUser] = useState({});
   const { user } = useParams();
   const navigate = useNavigate();
-  const myProfile = user.charAt(0).toUpperCase() + user.slice(1)
+  const myProfile = user.charAt(0).toUpperCase() + user.slice(1);
+  const [showForm, setShowForm] = useState(false);
 
   async function handleLogout() {
     logoutUser(user).then(setCurrentUser);
     navigate(`/`)
+  }
+
+  async function handleNewChore() {
+    setShowForm(previous => !previous);
   }
 
   useEffect(() => {
@@ -39,15 +45,22 @@ export default function ChoreList() {
             <button className="changeUserButton" type="submit" onClick={handleLogout}>CHANGE USER</button>
           </div>
           <div className="MyPoints">
-            <div class="Coin"></div>
-            <span class="point-value">{currentUser.pointReward}</span>
+            <div className="Coin"></div>
+            <span className="point-value">{currentUser.pointReward}</span>
           </div>
         </div>
         <div className="main-wrapper">
           <div className="ChoreList">
             <div className="chorelist-header">
             <div className="chorely">Chores</div>
-            <button className="create-chore-button">ADD NEW CHORE</button>
+            <button className="create-chore-button" onClick={handleNewChore}>ADD NEW CHORE</button>
+            <div className="chore-form-container">
+              {showForm && (
+                <div className="chore-form-float">
+                  <AddNewChore onClose={() => setShowForm(false)} user={user}/>
+                </div>
+              )}
+            </div>
             </div>
             <div className="chorelist-body">
 

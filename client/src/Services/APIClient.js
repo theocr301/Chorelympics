@@ -128,3 +128,20 @@ export async function reopenChore(user, name) {
     console.log('Error reopening chore');
   }
 }
+
+export async function generateChore(user, name, difficulty) {
+  const parsedUser = user.toLowerCase();
+  const parsedName = name.toLowerCase();
+  try {
+    const response = await fetch(`${baseUrl}/${parsedUser}/chores`, {
+      method: "POST",
+      body: JSON.stringify({ "name": parsedName, "difficulty": difficulty }),
+      headers: { "Content-type": "application/json" }
+    });
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.log(error);
+    console.log('Error creating chore');
+  }
+}

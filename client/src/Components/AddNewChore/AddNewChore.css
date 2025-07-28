@@ -1,0 +1,102 @@
+.form-container {
+  display: flex;
+  position: fixed;
+  flex-direction: column;
+  justify-content: center;
+  width: 550px;
+  height: 300px;
+  top: 300px;
+  left: 35vw;
+  align-items: center;
+  background-color: rgba(255, 230, 200, 1);
+  opacity: 1;
+  border-radius: 10px;
+  padding-top: 24px;
+  padding-right: 28px;
+  padding-bottom: 24px;
+  padding-left: 20px;
+  font-family: "Jua";
+  box-shadow: rgba(109, 82, 119, 1) 6px 6px;
+  z-index: 10;
+}
+
+.submit-form {
+  display: flex;
+  position: fixed;
+  flex-direction: column;
+  align-items: center;
+  font-family: "Jua";
+}
+
+.spongy {
+  position: absolute;
+  width: 200px;
+  height: auto;
+  top: 178px;
+  left: calc(35vw + 360px);
+  z-index: 5;
+}
+
+.formButton {
+  font-size: 20px;
+  font-family: "Jua";
+  background-color: rgba(255, 194, 77, 1);
+  border-color: rgba(255, 194, 77, 1);
+  color: white;
+  border-radius: 10px;
+  width: 150px;
+  height: 40px;
+  border-width: 2px;
+  box-shadow: rgba(109, 82, 119, 1) 3px 3px;
+}
+
+.formButton:hover {
+  cursor: pointer;
+  background-color: rgba(255, 170, 30, 1);
+  border-color: rgba(255, 170, 30, 1);
+  box-shadow:
+    rgba(109, 82, 119, 1) 3px 3px,
+    0 0 8px rgba(255, 194, 77, 0.7);
+}
+
+.nameQuestion {
+  display: inline;
+  font-size: 32px;
+  color: rgba(143, 82, 77, 1);
+  text-shadow:
+    -3px -3px 0 rgba(255, 255, 255, 1),
+     3px -3px 0 rgba(255, 255, 255, 1),
+    -3px  3px 0 rgba(255, 255, 255, 1),
+     3px  3px 0 rgba(255, 255, 255, 1),
+    -3px  0   0 rgba(255, 255, 255, 1),
+     3px  0   0 rgba(255, 255, 255, 1),
+     0   3px  0 rgba(255, 255, 255, 1),
+     0  -3px  0 rgba(255, 255, 255, 1);
+}
+
+.inputBox {
+  justify-items: center;
+  font-family: "Jua";
+  font-size: 20px;
+  color: rgba(143, 82, 77, 1);
+  border: 2px solid rgba(229, 229, 229, 1);
+  padding: 12px 16px;
+  margin: 20px;
+  width: 400px;
+  height: 10px;
+  border-radius: 16px;
+  border-width: 2px;
+}
+
+.inputBox:focus {
+  outline: none;
+  border: 2px solid rgba(143, 82, 77, 0.4);
+  box-shadow: 0 0 10px rgba(143, 82, 77, 0.4);
+}
+
+.spongy-sticker {
+  display: flex;
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+}

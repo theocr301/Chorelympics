@@ -10,12 +10,11 @@ const ChoreSchema = new Schema({
     unique: true
   },
   difficulty: {
-    type: Number,
+    type: String,
     required: true
   },
   duration: {
-    type: Number, 
-    required: true
+    type: Number,
   },
   isDone: {
     type: Boolean, 
