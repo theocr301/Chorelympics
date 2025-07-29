@@ -24,6 +24,7 @@ export default function LandingPage({setUser}) {
 
   return (
     <>
+    <div className="chorelympics">CHORELYMPICS</div>
     <div className="spongy-sticker">
       <img src={spongyImage} className="spongy"></img>
       <div className="form-container">
