@@ -3,9 +3,9 @@ import { assignChore, completeChore, unassignChore, reopenChore } from '../../Se
 
 export default function ChoreItem({user, choreItem, setChoreList}) {
   const difficultyImages = {
-  Easy: '/public/Easy.svg',
-  Medium: '/public/Medium.svg',
-  Hard: '/public/Hard.svg',
+  Easy: '/Easy.svg',
+  Medium: '/Medium.svg',
+  Hard: '/Hard.svg',
   };
 
   async function handleAssign(event) {

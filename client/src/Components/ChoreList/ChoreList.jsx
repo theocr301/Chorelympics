@@ -50,7 +50,7 @@ export default function ChoreList() {
           </div>
           <div className="MyPoints">
             <div className="Coin">
-              <div class="InnerCoin"></div>
+              <div className="InnerCoin"></div>
             </div>
             <span className="point-value">{currentUser.pointReward}</span>
           </div>
@@ -63,9 +63,12 @@ export default function ChoreList() {
             <button className="create-chore-button" onClick={handleNewChore}>ADD NEW CHORE</button>
             <div className="chore-form-container">
               {showForm && (
-                <div className="chore-form-float">
-                  <AddNewChore onClose={() => setShowForm(false)} user={user}/>
-                </div>
+                <>
+                  <div className="dim-overlay"></div>
+                  <div className="chore-form-float">
+                    <AddNewChore onClose={() => setShowForm(false)} user={user}/>
+                  </div>
+                </>
               )}
             </div>
             </div>
