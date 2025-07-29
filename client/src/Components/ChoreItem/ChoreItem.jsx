@@ -2,6 +2,11 @@ import './ChoreItem.css';
 import { assignChore, completeChore, unassignChore, reopenChore } from '../../Services/APIClient.js';
 
 export default function ChoreItem({user, choreItem, setChoreList}) {
+  const difficultyImages = {
+  Easy: '/public/Easy.svg',
+  Medium: '/public/Medium.svg',
+  Hard: '/public/Hard.svg',
+  };
 
   async function handleAssign(event) {
     const assigned = await assignChore(user, choreItem.name);
@@ -71,8 +76,15 @@ export default function ChoreItem({user, choreItem, setChoreList}) {
         <div>{choreItem.assignee}</div>
       </div>
       <div className="chore-details">
-        <div>Difficulty: {choreItem.difficulty}</div>
-        <div>Reward: {choreItem.pointReward}</div>
+        <div>
+          <img
+            className="diff-image"
+            src={difficultyImages[choreItem.difficulty]}
+            alt={choreItem.difficulty}
+          />
+        </div>
+        <div className="chore-Coin"></div>
+        <div className="chore-coin-reward">{choreItem.pointReward}</div>
       </div>
       <div className="chore-buttons">
         {choreItem.assignee === "Unassigned" && !choreItem.isDone && (

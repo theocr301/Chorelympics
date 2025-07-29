@@ -6,6 +6,7 @@
 
 .user-details {
   margin-top: 10px;
+  color: rgba(170, 170, 170, 1);
 }
 
 .user-display {
@@ -15,4 +16,5 @@
 .user {
   margin-top: 10px;
   margin-left: 5px;
+  color: rgba(143, 82, 77, 1);
 }

@@ -21,7 +21,7 @@ const UserSchema = new Schema({
   },
   profilePic: {
     type: String,
-    default: '../../assets/default'
+    default: 'Avatar.svg'
   }
 });
 

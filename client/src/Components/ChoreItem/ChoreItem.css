@@ -8,7 +8,10 @@
 .chore-name {
   display: flex;
   flex-direction: row;
-  justify-content: space-evenly;
+  justify-content: space-between;
+  margin-left: 20px;
+  margin-bottom: 20px;
+  margin-right: 20px;
 }
 
 .individual-chore {
@@ -35,15 +38,36 @@
   font-family: "Jua";
 }
 
+.choreButtonAssign:hover {
+  cursor: pointer;
+  background-color: rgba(143, 82, 77, 1);
+  border-color: rgba(143, 82, 77, 1);
+  color: white;
+  box-shadow:
+    rgba(109, 82, 77, 0.25) 2px 2px 5px 1px,
+    0 0 8px 2px rgba(143, 82, 77, 0.15);
+}
+
 .choreButtonUnassign {
   cursor: pointer;
   border: 2px solid rgba(143, 82, 77, 1);
   border-radius: 8px;
-  padding-left: 5em;
-  padding-right: 5em;
+  padding-left: 0.5em;
+  padding-right: 0.5em;
   padding-top: 0.5em;
   padding-bottom: 0.5em;
   font-family: "Jua";
+  margin-right: 100px;
+}
+
+.choreButtonUnassign:hover {
+  cursor: pointer;
+  background-color: rgba(143, 82, 77, 1);
+  border-color: rgba(143, 82, 77, 1);
+  color: white;
+  box-shadow:
+    rgba(109, 82, 77, 0.25) 2px 2px 5px 1px,
+    0 0 8px 2px rgba(143, 82, 77, 0.15);
 }
 
 .choreButtonComplete {
@@ -57,6 +81,16 @@
   font-family: "Jua";
 }
 
+.choreButtonComplete:hover {
+  cursor: pointer;
+  background-color: rgba(143, 82, 77, 1);
+  border-color: rgba(143, 82, 77, 1);
+  color: white;
+  box-shadow:
+    rgba(109, 82, 77, 0.25) 2px 2px 5px 1px,
+    0 0 8px 2px rgba(143, 82, 77, 0.15);
+}
+
 .choreButtonReopen {
   cursor: pointer;
   border: 2px solid rgba(143, 82, 77, 1);
@@ -66,4 +100,37 @@
   padding-top: 0.5em;
   padding-bottom: 0.5em;
   font-family: "Jua";
+}
+
+.choreButtonReopen:hover {
+  cursor: pointer;
+  background-color: rgba(143, 82, 77, 1);
+  border-color: rgba(143, 82, 77, 1);
+  color: white;
+  box-shadow:
+    rgba(109, 82, 77, 0.25) 2px 2px 5px 1px,
+    0 0 8px 2px rgba(143, 82, 77, 0.15);
+}
+
+.chore-Coin {
+  width: 25px;
+  height: 25px;
+  background: rgba(255, 152, 58, 1);
+  border-radius: 50%;
+  border: 5px solid rgba(255, 192, 87, 1);
+  display: flex;
+  margin-left: 230px;
+}
+
+.chore-coin-reward {
+  display: flex;
+  font-size: 15px;
+  margin-top: 5px;
+  color: rgba(170, 170, 170, 1);
+}
+
+.diff-image {
+  display: flex;
+  height: 30px;
+  width: auto;
 }
