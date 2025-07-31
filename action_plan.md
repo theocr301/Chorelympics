@@ -13,4 +13,19 @@
 
 2. Refactor client side
 
+| Theodore | Luana |
+| ----------- | ----------- |
+|  |  |
+
 ## Add unit tests
+1. Server tests
+
+| Theodore | Luana |
+| ----------- | ----------- |
+|  |  |
+
+2. Client tests
+
+| Theodore | Luana |
+| ----------- | ----------- |
+|  |  |
