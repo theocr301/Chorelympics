@@ -30,3 +30,8 @@
 | Theodore | Luana |
 | ----------- | ----------- |
 |  |  |
+
+## Extras
+1. Refactor endpoints
+- assign and unassign into one
+- mark complete and mark not complete into on
