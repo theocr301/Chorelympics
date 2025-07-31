@@ -1,6 +1,6 @@
 # Chorelympics
 
-Theo and Luana legacy project - test commit 2
+Theo and Luana legacy project - test commit 3
 
 ## Project name
 
