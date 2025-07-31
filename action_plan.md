@@ -3,7 +3,82 @@
 ## Prep
 1. ~~Install dependencies~~
 2. ~~Refactor to connect to database once~~
-2. Set up postman to deal with database
+3. ~~Set up postman to deal with database~~
+4. Install all typescript dependencies
+
+in root 
+
+`npm i --save-dev typescript @types/node`
+
+`npx tsc --init`
+
+in server
+
+`npm i --save-dev typescript @types/node @types/express`
+
+`npx tsc --init`
+
+
+in client
+
+`npm i --save-dev typescript @types/node @types/react @types/react-router @types/react-dom`
+
+`npx tsc --init`
+
+uncomment and/or add the necessary lines in tsconfig.js
+
+- root
+```
+{
+  "compilerOptions": {
+    "target": "ES2020",
+    "module": "commonjs",
+    "strict": true,
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "skipLibCheck": true
+  }
+}
+```
+
+- server
+```
+{
+  "compilerOptions": {
+    "target": "ES2016",
+    "module": "commonjs",
+    "allowJs": true,
+    "checkJs": false,
+    "outDir": "./dist",
+    "rootDir": "./",
+    "strict": true,
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "skipLibCheck": true
+  },
+  "include": ["**/*"]
+}
+```
+- client
+```
+{
+  "compilerOptions": {
+    "target": "ES6",
+    "module": "ESNext",
+    "jsx": "react-jsx",
+    "allowJs": true,
+    "checkJs": false,
+    "noEmit": true,
+    "strict": true,
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "skipLibCheck": true
+  },
+  "include": ["src"]
+}
+```
+
+---
 
 ## Refactor into Typescript
 1. Refactor server side
