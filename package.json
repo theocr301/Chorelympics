@@ -4,7 +4,10 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "ts-node src/index.ts",
+  "build": "tsc",
+  "start": "node dist/index.js"
   },
   "repository": {
     "type": "git",
@@ -19,8 +22,10 @@
   "homepage": "https://github.com/Mihai-George-Serban/Chorelympics#readme",
   "devDependencies": {
     "@eslint/js": "^9.31.0",
+    "@types/node": "^24.1.0",
     "eslint": "^9.31.0",
     "eslint-plugin-react": "^7.37.5",
-    "globals": "^16.3.0"
+    "globals": "^16.3.0",
+    "typescript": "^5.8.3"
   }
 }
