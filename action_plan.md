@@ -1,7 +1,8 @@
 # Legacy Project Action Plan
 
 ## Prep
-1. Install dependencies
+1. ~~Install dependencies~~
+2. ~~Refactor to connect to database once~~
 2. Set up postman to deal with database
 
 ## Refactor into Typescript
