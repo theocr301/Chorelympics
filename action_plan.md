@@ -14,7 +14,7 @@ in root
 
 in server
 
-`npm i --save-dev typescript @types/node @types/express`
+`npm i --save-dev typescript @types/node @types/express @types/mongoose`
 
 `npx tsc --init`
 
