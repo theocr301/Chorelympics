@@ -1,8 +1,18 @@
-const mongoose = require('../db.js');
+import db from '../db';
+import mongoose, { Schema, Document, Model } from 'mongoose';
+
+export interface IUser extends Document {
+  name: string;
+  pointReward: number;
+  assignedChores: string[];
+  isCurrent: boolean;
+  profilePic: string;
+}
+
 
 const UserSchema = new mongoose.Schema({
   name: {
-    type: String, 
+    type: String,
     required: true,
     unique: true
   },
@@ -24,6 +34,5 @@ const UserSchema = new mongoose.Schema({
   }
 });
 
-const User = mongoose.model('User', UserSchema);
-
-module.exports = User;
+const User: Model<IUser> = mongoose.model<IUser>('User', UserSchema);
+export default User;

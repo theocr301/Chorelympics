@@ -1,60 +1,70 @@
-const User = require('../Models/userModels.js');
-const { parseName } = require('../utils.js');
+import { Request, Response } from 'express';
+import User, { IUser } from '../Models/userModels';
+import { parseName } from '../utils';
 
-exports.getAllUsers = async function (request, response) {
+export const getAllUsers = async (req: Request, res: Response): Promise<void> => {
   try {
     const data = await User.find({});
-    response.status(200);
-    response.send(data);
+    res.status(200);
+    res.send(data);
   } catch (error) {
-    response.status(400);
-    response.send(error);
+    res.status(400);
+    res.send(error);
   }
 };
 
-exports.getCurrentUser = async function (request, response) {
+export const getCurrentUser = async (req: Request, res: Response) : Promise<void> => {
   try {
     const data = await User.find({ isCurrent: true });
-    response.status(200);
-    response.send(data);
+    res.status(200);
+    res.send(data);
   } catch (error) {
-    response.status(400);
-    response.send(error);
+    res.status(400);
+    res.send(error);
   }
 }
 
-exports.generateUser = async function (request, response) {
-  const { name } = request.body;
+export const generateUser = async (req: Request, res: Response) : Promise<void> => {
+  const { name } = req.body as { name?: string };
 
   if (!name || typeof name !== 'string') {
-    response.status(400).send('Bad Request, Name is required, must be a string and different from existing entries');
+    res.status(400).send('Bad Request, Name is required, must be a string and different from existing entries');
   }
   try {
-    var responseData = {};
-    const userData = await User.find({});
-    var found = userData.find((element) => element.name === name);
+    const existingUsers = await User.find({});
+    let found = existingUsers.find((user) => user.name === name);
+    let responseData: IUser;
     if (found) {
-      found = await User.findOneAndUpdate({ name: parseName(name) }, { $set: { 'isCurrent': true } }, { new: true })
-      responseData = found;
+      const updatedUser = await User.findOneAndUpdate(
+        { name: parseName(name) },
+        { $set: { isCurrent: true } },
+        { new: true }
+      );
+      if (!updatedUser) throw new Error('User not found for update');
+      responseData = updatedUser;
     } else {
-      responseData = await User.insertOne(request.body);
+      const newUser = new User({
+        name: parseName(name),
+        isCurrent: true,
+      });
+      responseData = await newUser.save();
     }
-    response.status(201).send(responseData.name);
+    res.status(201).send(responseData.name);
   } catch (error) {
-    console.log(error);
-    response.status(400).send('Something went wrong while creating the user, it might already exist in the DB');
+    console.error(error);
+    res.status(400).send('Something went wrong while creating the user. It might already exist in the DB.');
   }
 };
 
-exports.logoutUser = async function (request, response) {
-  const { user } = request.params;
+export const logoutUser = async (req: Request, res: Response) : Promise<void> => {
+  const { user } = req.params;
 
   try {
     const data = await User.findOneAndUpdate({ name: parseName(user) }, { $set: { 'isCurrent': false } }, { new: true })
-    response.status(200);
-    response.send(data);
+    res.status(200);
+    res.send(data);
   } catch (error) {
-    response.status(400);
-    response.send(error);
+    res.status(400);
+    res.send(error);
   }
 }
