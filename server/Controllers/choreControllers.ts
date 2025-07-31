@@ -1,5 +1,5 @@
 const { Chore, pushChore, removeChore, closeChore, reopenChore } = require('../Models/choreModels.js');
-const { parseName } = require('../utils.js');
+// const { parseName } = require('../utils.js');
 
 //TODO add sanity checks for duplicate entries, especially for assign and unassign
 
@@ -15,6 +15,8 @@ exports.getAllChores = async function (request, response) {
 
 exports.generateChore = async function (request, response) {
   const { name, difficulty } = request.body;
+  const { parseName } = require('../utils.js'); //REMOVE
+
 
   if (!name || typeof name !== 'string') {
     response.status(400).send('Bad Request, Name is required, must be a string and different from existing entries');
