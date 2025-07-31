@@ -1,9 +1,8 @@
-const mongoose = require('mongoose');
-const { Schema } = mongoose;
+const mongoose = require('../db.js');
 const User = require('../Models/userModels.js');
 const { parseName } = require('../utils.js');
 
-const ChoreSchema = new Schema({
+const ChoreSchema = new mongoose.Schema({
   name: {
     type: String, 
     required: true,
@@ -81,13 +80,6 @@ const reopenChore = async function (user, choreName) {
     console.error('Something went wrong while reopening the chore', error);
     return error;
   }
-};
-
-main().catch(error => console.log(error));
-
-async function main() {
-  await mongoose.connect('mongodb://127.0.0.1:27017/chores');
-  console.log(`DB connection established successfully!`);
 };
 
 module.exports = { Chore, pushChore, removeChore, closeChore, reopenChore };
