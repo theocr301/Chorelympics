@@ -1,5 +1,7 @@
 # Chorelympics
 
+Theo and Luana legacy project - test commit 3
+
 ## Project name
 
 Choose a name for your project. Don’t worry, it doesn’t need to be fancy, it’s just a way to identify it (e.g. "Hipstacam", or "Woofie").
