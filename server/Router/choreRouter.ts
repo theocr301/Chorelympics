@@ -9,4 +9,4 @@ router.put('/:user/chores/marknotcomplete/:name', markChoreNotComplete);
 router.put('/:user/chores/assign/:name', assignChore);
 router.put('/:user/chores/unassign/:name', unassignChore);
 
-module.exports = router;
+export default router;
