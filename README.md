@@ -1,6 +1,6 @@
 # Chorelympics
 
-Theo and Luana legacy project - test commit - is it working?
+Theo and Luana legacy project - test commit - is it working now?
 
 ## Project name
 
