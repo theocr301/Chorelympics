@@ -1,10 +1,10 @@
-const express = require('express');
-const cors = require('cors');
-const choreRouter = require('./Router/choreRouter.js');
-const userRouter = require('./Router/userRouter.js');
+import express, { Application } from 'express';
+import cors from 'cors';
+import choreRouter from './Router/choreRouter';
+import userRouter from './Router/userRouter';
 
-const app = express();
-const port = 3000;
+const app: Application = express();
+const port: number = 3000;
 
 app.use(cors());
 app.use(express.json());

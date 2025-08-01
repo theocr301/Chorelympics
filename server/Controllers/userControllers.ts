@@ -24,11 +24,12 @@ export const getCurrentUser = async (req: Request, res: Response) : Promise<void
   }
 }
 
-export const generateUser = async (req: Request, res: Response) : Promise<void> => {
+export const generateUser = async (req: Request, res: Response): Promise<void> => {
   const { name } = req.body as { name?: string };
 
   if (!name || typeof name !== 'string') {
     res.status(400).send('Bad Request, Name is required, must be a string and different from existing entries');
+    return;
   }
   try {
     const existingUsers = await User.find({});
