@@ -44,20 +44,20 @@
 
 in root 
 
-`npm i --save-dev typescript @types/node`
+`npm i --save-dev typescript ts-node @types/node`
 
 `npx tsc --init`
 
 in server
 
-`npm i --save-dev typescript @types/node @types/express @types/mongoose`
+`npm i --save-dev typescript ts-node @types/node @types/express @types/mongoose`
 
 `npx tsc --init`
 
 
 in client
 
-`npm i --save-dev typescript @types/node @types/react @types/react-router @types/react-dom`
+`npm i --save-dev typescript ts-node @types/node @types/react @types/react-router @types/react-dom`
 
 `npx tsc --init`
 
