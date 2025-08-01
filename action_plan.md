@@ -12,14 +12,22 @@
 
 | Theodore | Luana |
 | ----------- | ----------- |
-| utils.js, db.js and index.js | ~~add db.js + only one db connection~~ |
-| user model and controller | ~~chore model and controller~~ |
+| ~~utils.js, db.js and index.js~~ | ~~add db.js + only one db connection~~ |
+| ~~user model and controller~~ | ~~chore model and controller~~ |
 
 2. Refactor client side
+- .html and .css stays the same!
+- .js to .ts and .jsx to .tsx
+
+Easy: UserItem, Leaderboard, LandingPage, AddNewChore, App, main
+
+More logic: ChoreItem.jsx, ChoreList.jsx, APIClient.js
 
 | Theodore | Luana |
 | ----------- | ----------- |
-|  |  |
+| ChoreList.jsx | ChoreItem.jsx |
+| LandingPage.jsx + Leaderboard.jsx |  AddNewChore.jsx + UserItem.jsx + App.jsx + main.jsx |
+| APIClient.js |  |
 
 ## Add unit tests
 1. Server tests
