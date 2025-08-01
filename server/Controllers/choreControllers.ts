@@ -1,8 +1,11 @@
 // const { parseName } = require('../utils.js');
+import { parseName } from '../utils';
+import { Chore, closeChore, reopenChore, pushChore, removeChore } from '../Models/choreModels';
+import { Request, Response } from 'express';
 
 //TODO add sanity checks for duplicate entries, especially for assign and unassign
 
-exports.getAllChores = async function (request, response) {
+exports.getAllChores = async function (request: Request, response: Response) {
   try {
     const data = await Chore.find({});
     response.status(200);
@@ -12,10 +15,7 @@ exports.getAllChores = async function (request, response) {
   }
 };
 
-exports.generateChore = async function (request, response) {
-  const { Chore } = require('../Models/choreModels.ts'); //REMOVE
-  const { parseName } = require('../utils.js'); //REMOVE
-
+exports.generateChore = async function (request: Request, response: Response) {
   const { name, difficulty } = request.body;
 
 
@@ -44,8 +44,7 @@ exports.generateChore = async function (request, response) {
   }
 };
 
-exports.markChoreComplete = async function (request, response) {
-  const closeChore = require('../Models/choreModels.ts');
+exports.markChoreComplete = async function (request: Request, response: Response) {
   const { user, name } = request.params;
 
   if (!name || typeof name !== 'string' || !user || typeof user !== 'string') {
@@ -60,8 +59,7 @@ exports.markChoreComplete = async function (request, response) {
   }
 };
 
-exports.markChoreNotComplete = async function (request, response) {
-  const { reopenChore } = require('../Models/choreModels.ts');
+exports.markChoreNotComplete = async function (request: Request, response: Response) {
   const { user, name } = request.params;
 
   if (!name || typeof name !== 'string' || !user || typeof user !== 'string') {
@@ -77,9 +75,7 @@ exports.markChoreNotComplete = async function (request, response) {
 };
 
 //TODO might need to refactor this to take user ID
-exports.assignChore = async function (request, response) {
-  const { pushChore } = require('../Models/choreModels.ts'); //REMOVE
-
+exports.assignChore = async function (request: Request, response: Response) {
   const { user, name } = request.params;
 
   if (!name || typeof name !== 'string' || !user || typeof user !== 'string') {
@@ -95,8 +91,7 @@ exports.assignChore = async function (request, response) {
   }
 };
 
-exports.unassignChore = async function (request, response) {
-  const {removeChore } = require('../Models/choreModels.ts'); //REMOVE
+exports.unassignChore = async function (request: Request, response: Response) {
   const { user, name } = request.params;
 
   if (!name || typeof name !== 'string' || !user || typeof user !== 'string') {
