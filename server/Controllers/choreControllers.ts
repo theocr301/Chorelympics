@@ -1,4 +1,3 @@
-const { Chore, pushChore, removeChore, closeChore, reopenChore } = require('../Models/choreModels.js');
 // const { parseName } = require('../utils.js');
 
 //TODO add sanity checks for duplicate entries, especially for assign and unassign
@@ -14,8 +13,10 @@ exports.getAllChores = async function (request, response) {
 };
 
 exports.generateChore = async function (request, response) {
-  const { name, difficulty } = request.body;
+  const { Chore } = require('../Models/choreModels.ts'); //REMOVE
   const { parseName } = require('../utils.js'); //REMOVE
+
+  const { name, difficulty } = request.body;
 
 
   if (!name || typeof name !== 'string') {
@@ -44,6 +45,7 @@ exports.generateChore = async function (request, response) {
 };
 
 exports.markChoreComplete = async function (request, response) {
+  const closeChore = require('../Models/choreModels.ts');
   const { user, name } = request.params;
 
   if (!name || typeof name !== 'string' || !user || typeof user !== 'string') {
@@ -59,6 +61,7 @@ exports.markChoreComplete = async function (request, response) {
 };
 
 exports.markChoreNotComplete = async function (request, response) {
+  const { reopenChore } = require('../Models/choreModels.ts');
   const { user, name } = request.params;
 
   if (!name || typeof name !== 'string' || !user || typeof user !== 'string') {
@@ -75,6 +78,8 @@ exports.markChoreNotComplete = async function (request, response) {
 
 //TODO might need to refactor this to take user ID
 exports.assignChore = async function (request, response) {
+  const { pushChore } = require('../Models/choreModels.ts'); //REMOVE
+
   const { user, name } = request.params;
 
   if (!name || typeof name !== 'string' || !user || typeof user !== 'string') {
@@ -91,6 +96,7 @@ exports.assignChore = async function (request, response) {
 };
 
 exports.unassignChore = async function (request, response) {
+  const {removeChore } = require('../Models/choreModels.ts'); //REMOVE
   const { user, name } = request.params;
 
   if (!name || typeof name !== 'string' || !user || typeof user !== 'string') {
