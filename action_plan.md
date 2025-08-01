@@ -4,7 +4,43 @@
 1. ~~Install dependencies~~
 2. ~~Refactor to connect to database once~~
 3. ~~Set up postman to deal with database~~
-4. Install all typescript dependencies
+4. ~~Install all typescript dependencies (check bottom of file)~~
+---
+
+## Refactor into Typescript
+1. Refactor server side
+
+| Theodore | Luana |
+| ----------- | ----------- |
+| utils.js, db.js and index.js | ~~add db.js + only one db connection~~ |
+| user model and controller | ~~chore model and controller~~ |
+
+2. Refactor client side
+
+| Theodore | Luana |
+| ----------- | ----------- |
+|  |  |
+
+## Add unit tests
+1. Server tests
+
+| Theodore | Luana |
+| ----------- | ----------- |
+|  |  |
+
+2. Client tests
+
+| Theodore | Luana |
+| ----------- | ----------- |
+|  |  |
+
+## Extras
+1. Refactor endpoints
+- assign and unassign into one
+- mark complete and mark not complete into on
+
+---
+## Typescript dependencies
 
 in root 
 
@@ -77,36 +113,3 @@ uncomment and/or add the necessary lines in tsconfig.js
   "include": ["src"]
 }
 ```
-
----
-
-## Refactor into Typescript
-1. Refactor server side
-
-| Theodore | Luana |
-| ----------- | ----------- |
-| user + utils.js and index.js | chore |
-
-2. Refactor client side
-
-| Theodore | Luana |
-| ----------- | ----------- |
-|  |  |
-
-## Add unit tests
-1. Server tests
-
-| Theodore | Luana |
-| ----------- | ----------- |
-|  |  |
-
-2. Client tests
-
-| Theodore | Luana |
-| ----------- | ----------- |
-|  |  |
-
-## Extras
-1. Refactor endpoints
-- assign and unassign into one
-- mark complete and mark not complete into on
