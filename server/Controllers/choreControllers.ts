@@ -5,7 +5,7 @@ import { Request, Response } from 'express';
 
 //TODO add sanity checks for duplicate entries, especially for assign and unassign
 
-exports.getAllChores = async function (request: Request, response: Response) {
+export const getAllChores = async function (request: Request, response: Response) {
   try {
     const data = await Chore.find({});
     response.status(200);
@@ -15,7 +15,7 @@ exports.getAllChores = async function (request: Request, response: Response) {
   }
 };
 
-exports.generateChore = async function (request: Request, response: Response) {
+export const generateChore = async function (request: Request, response: Response) {
   const { name, difficulty } = request.body;
 
 
@@ -44,7 +44,7 @@ exports.generateChore = async function (request: Request, response: Response) {
   }
 };
 
-exports.markChoreComplete = async function (request: Request, response: Response) {
+export const markChoreComplete = async function (request: Request, response: Response) {
   const { user, name } = request.params;
 
   if (!name || typeof name !== 'string' || !user || typeof user !== 'string') {
@@ -59,7 +59,7 @@ exports.markChoreComplete = async function (request: Request, response: Response
   }
 };
 
-exports.markChoreNotComplete = async function (request: Request, response: Response) {
+export const markChoreNotComplete = async function (request: Request, response: Response) {
   const { user, name } = request.params;
 
   if (!name || typeof name !== 'string' || !user || typeof user !== 'string') {
@@ -75,7 +75,7 @@ exports.markChoreNotComplete = async function (request: Request, response: Respo
 };
 
 //TODO might need to refactor this to take user ID
-exports.assignChore = async function (request: Request, response: Response) {
+export const assignChore = async function (request: Request, response: Response) {
   const { user, name } = request.params;
 
   if (!name || typeof name !== 'string' || !user || typeof user !== 'string') {
@@ -91,7 +91,7 @@ exports.assignChore = async function (request: Request, response: Response) {
   }
 };
 
-exports.unassignChore = async function (request: Request, response: Response) {
+export const unassignChore = async function (request: Request, response: Response) {
   const { user, name } = request.params;
 
   if (!name || typeof name !== 'string' || !user || typeof user !== 'string') {
