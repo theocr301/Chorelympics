@@ -1,6 +1,13 @@
-const express = require('express');
-const router = express.Router();
-const { getAllChores, generateChore, markChoreComplete, markChoreNotComplete, assignChore, unassignChore } = require('../Controllers/choreControllers.ts');
+import { Router } from 'express';
+import {
+  getAllChores,
+  generateChore,
+  markChoreComplete,
+  markChoreNotComplete,
+  assignChore, 
+  unassignChore,
+} from '../Controllers/choreControllers';
+const router = Router();
 
 router.get('/:user/chores', getAllChores);
 router.post('/:user/chores', generateChore);
