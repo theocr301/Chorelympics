@@ -26,8 +26,8 @@ More logic: ChoreItem.jsx, ChoreList.jsx, APIClient.js
 
 | Theodore | Luana |
 | ----------- | ----------- |
-| ChoreList.jsx | ChoreItem.jsx |
-| LandingPage.jsx + Leaderboard.jsx |  AddNewChore.jsx + UserItem.jsx + App.jsx + main.jsx |
+| ChoreList.jsx | ~~ChoreItem.jsx~~ |
+| LandingPage.jsx + Leaderboard.jsx |  ~~AddNewChore.jsx + UserItem.jsx + App.jsx + main.jsx~~ |
 | APIClient.js |  |
 
 ## Add unit tests
