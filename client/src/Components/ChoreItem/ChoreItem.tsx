@@ -1,14 +1,16 @@
 import './ChoreItem.css';
 import { assignChore, completeChore, unassignChore, reopenChore } from '../../Services/APIClient.js';
+import { UserProps } from '../../types/user';
+import { ChoreProps } from '../../types/chore';
 
-export default function ChoreItem({user, choreItem, setChoreList}) {
+export default function ChoreItem({user}: UserProps, {choreItem, setChoreList}: ChoreProps) {
   const difficultyImages = {
   Easy: '/Easy.svg',
   Medium: '/Medium.svg',
   Hard: '/Hard.svg',
   };
 
-  async function handleAssign(event) {
+  async function handleAssign(event: React.MouseEvent<HTMLButtonElement>): Promise<void> {
     const assigned = await assignChore(user, choreItem.name);
     setChoreList(oldChoreList => {
       const updatedChoreList = [];
@@ -23,7 +25,7 @@ export default function ChoreItem({user, choreItem, setChoreList}) {
     });
   };
 
-  async function handleUnassign(event) {
+  async function handleUnassign(event: React.MouseEvent<HTMLButtonElement>): Promise<void> {
     const unassigned = await unassignChore(user, choreItem.name);
     setChoreList(oldChoreList => {
       const updatedChoreList = [];
@@ -38,7 +40,7 @@ export default function ChoreItem({user, choreItem, setChoreList}) {
     });
   }
 
-  async function handleComplete(event) {
+  async function handleComplete(event: React.MouseEvent<HTMLButtonElement>): Promise<void> {
     const completed = await completeChore(user, choreItem.name);
     setChoreList(oldChoreList => {
       const updatedChoreList = [];
@@ -53,7 +55,7 @@ export default function ChoreItem({user, choreItem, setChoreList}) {
     });
   };
 
-  async function handleReopen(event) {
+  async function handleReopen(event: React.MouseEvent<HTMLButtonElement>): Promise<void> {
     const reopened = await reopenChore(user, choreItem.name);
     setChoreList(oldChoreList => {
       const updatedChoreList = [];

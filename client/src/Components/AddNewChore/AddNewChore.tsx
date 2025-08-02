@@ -1,13 +1,13 @@
 import { useState } from 'react';
 import { generateChore } from '../../Services/APIClient';
-import { UserProp } from '../../types/user';
+import { UserProps } from '../../types/user';
 import { ChoreProps } from '../../types/chore';
 
-export default function AddNewChore({onClose}: ChoreProps, { user }: UserProp) {
+export default function AddNewChore({onClose}: ChoreProps, { user }: UserProps) {
   const [choreName, setChoreName] = useState(''); // chore.ts ChoreProps
   const [difficulty, setDifficulty] = useState(''); // chore.ts ChoreProps
 
-  async function handleChoreSubmit(event: React.ChangeEvent<HTMLFormElement>): Promise<void> {
+  async function handleChoreSubmit(event: React.MouseEvent<HTMLFormElement>): Promise<void> {
       event.preventDefault();
       const newChore = await generateChore(user, choreName, difficulty);
       setChoreName(newChore);
