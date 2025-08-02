@@ -6,19 +6,17 @@ import { useState } from 'react';
 import { getCurrentUser } from './Services/APIClient';
 
 export default function App() {
-  const [user, setUser] = useState('');
+  const [user, setUser] = useState(''); //user.ts interface
 
   return (
-    <>
-      <div className="body-container">
-        <BrowserRouter>
-          <Routes>
-            <Route path="/" element={<LandingPage user={user} setUser={setUser}/>} />
-            <Route path=":user/chores" element={<ChoreList />} />
-          </Routes>
-        </BrowserRouter>
-      </div>
-    </>
+    <div className="body-container">
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<LandingPage user={user} setUser={setUser}/>} />
+          <Route path=":user/chores" element={<ChoreList />} />
+        </Routes>
+      </BrowserRouter>
+    </div>
   )
 }
 
