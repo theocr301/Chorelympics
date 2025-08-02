@@ -9,7 +9,6 @@ export type Chore = {
 
 export interface ChoreProps {
   choreItem: Chore,
-  setChoreItem: React.Dispatch<React.SetStateAction<Chore>>,
   choreList: Chore[],
   setChoreList: React.Dispatch<React.SetStateAction<Chore[]>>,
   choreName: string,
