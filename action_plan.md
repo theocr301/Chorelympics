@@ -18,6 +18,7 @@
 2. Refactor client side
 - .html and .css stays the same!
 - .js to .ts and .jsx to .tsx
+- add interface and type for props
 
 Easy: UserItem, Leaderboard, LandingPage, AddNewChore, App, main
 
