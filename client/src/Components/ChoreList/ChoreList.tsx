@@ -51,12 +51,21 @@ const [difficulty, setDifficulty] = useState<'easy' | 'medium' | 'hard'>('easy')
     setShowForm((prev) => !prev);
   }
 
+  function normalizeDifficulty(difficulty: string): "easy" | "medium" | "hard" {
+    switch (difficulty.toLowerCase()) {
+      case "easy": return "easy";
+      case "medium": return "medium";
+      case "hard": return "hard";
+      default: throw new Error("Unknown difficulty");
+    }
+  }
+
   useEffect(() => {
     getAllChores().then((chores) => {
       if (chores) {
         const transformedChores = chores.map((chore) => ({
           ...chore,
-          difficulty: chore.difficulty as "easy" | "medium" | "hard",
+          difficulty: normalizeDifficulty(chore.difficulty),
         }));
         setChoreList(transformedChores);
       }
