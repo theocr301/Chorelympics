@@ -1,6 +1,6 @@
 // const mongoose = require('../db.js');
 import mongoose from '../db';
-const User = require('../Models/userModels.js');
+import User from '../Models/userModels';
 // const { parseName } = require('../utils.js');
 import { parseName } from '../utils';
 
@@ -45,7 +45,7 @@ const Chore = mongoose.model<Chore>('Chore', ChoreSchema);
 
 // TODO build a function here that imports User from userModel and pushed the chore id to the user choresArray - done i think?
 // TODO find the correct chore, invoke this function in choreController - done i think?
-const pushChore = async function (user: string, choreName: String): Promise<any> {
+const pushChore = async function (user: string, choreName: string): Promise<any> {
   try {
     const updatedChore = await Chore.findOneAndUpdate(
       { name: parseName(choreName) }, 
@@ -94,7 +94,7 @@ const closeChore = async function (user: string, choreName: string): Promise<any
     const userData = await User.findOne(
       { name: parseName(user) }
     ); //! add User interface
-    const updatedPoints = userData.pointReward + updatedChore.pointReward;
+    const updatedPoints = userData!.pointReward + updatedChore.pointReward;
     const data = await User.findOneAndUpdate(
       { name: parseName(user) }, 
       { $set: { 'pointReward': updatedPoints }, $push: { 'assignedChores': updatedChore.name }}, 
@@ -117,7 +117,7 @@ const reopenChore = async function (user: string, choreName: string): Promise<an
     const userData = await User.findOne(
       { name: parseName(user) }
     ); //! add User interface
-    const updatedPoints = userData.pointReward - updatedChore.pointReward;
+    const updatedPoints = userData!.pointReward - updatedChore.pointReward;
     const data = await User.findOneAndUpdate(
       { name: parseName(user) }, 
       { $set: { 'pointReward': updatedPoints }}, 
