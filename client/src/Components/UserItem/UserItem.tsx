@@ -1,6 +1,7 @@
+import { UserProps } from '../../types/user';
 import './UserItem.css';
 
-export default function UserItem({userItem}) {
+export default function UserItem({userItem}: UserProps) {
 
   return (
     <>
