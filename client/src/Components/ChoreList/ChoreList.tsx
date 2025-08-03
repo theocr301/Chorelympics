@@ -4,20 +4,12 @@ import ChoreItem from '../ChoreItem/ChoreItem'
 import { useParams } from 'react-router';
 import Leaderboard from '../Leaderboard/Leaderboard';
 import AddNewChore from '../AddNewChore/AddNewChore';
-import spongyImage from './assets/Spongy.png';
+import spongyImage from '../../assets/Spongy.png';
 import { useNavigate } from 'react-router-dom';
-
+import { Chore } from '../../types/chore';
 
 import './ChoreList.css';
 
-interface Chore {
-  name: string,
-  difficulty: string,
-  duration: number,
-  isDone: boolean,
-  pointReward: number,
-  assignee: string,
-}
 interface User {
   name: string;
   pointReward: number;
@@ -26,14 +18,12 @@ interface User {
   profilePic: string;
 }
 
-interface RouteParams {
-  user: string;
-}
-
 export default function ChoreList() {
   const [choreList, setChoreList] = useState<Chore[]>([]);
-  const [currentUser, setCurrentUser] = useState<User>({} as User);
-  const { user } = useParams<RouteParams>();
+  const [choreName, setChoreName] = useState<string>('');
+const [difficulty, setDifficulty] = useState<'easy' | 'medium' | 'hard'>('easy');
+  const [currentUser, setCurrentUser] = useState<User | null>(null);
+  const { user } = useParams<{ user?: string }>();
   const navigate = useNavigate();
   const [showForm, setShowForm] = useState(false);
 
@@ -50,8 +40,10 @@ export default function ChoreList() {
   const myCompletedChores = choreList.filter((choreItem) => choreItem.isDone);
 
   async function handleLogout() {
-    await logoutUser(user)
-    setCurrentUser({} as User);
+    if (user) {
+      await logoutUser(user);
+    }
+    setCurrentUser(null);
     navigate(`/`)
   }
 
@@ -60,9 +52,19 @@ export default function ChoreList() {
   }
 
   useEffect(() => {
-    getAllChores().then(setChoreList);
-    getCurrentUser().then(setCurrentUser);
-  }, [currentUser]);
+    getAllChores().then((chores) => {
+      if (chores) {
+        const transformedChores = chores.map((chore) => ({
+          ...chore,
+          difficulty: chore.difficulty as "easy" | "medium" | "hard",
+        }));
+        setChoreList(transformedChores);
+      }
+    });
+    getCurrentUser().then((user) => {
+      if (user) setCurrentUser(user);
+    });
+  }, []);
 
   return (
     <>
@@ -71,7 +73,7 @@ export default function ChoreList() {
           <div className="MyProfile">
             <div className="profile-info">
               <div className="user-avatar">
-                <img src={`/${currentUser.profilePic}`}></img>
+                <img src={`/${currentUser?.profilePic ?? 'Avatar.svg'}`}></img>
               </div>
               <div className="user-name">
                 {myProfile}
@@ -83,7 +85,7 @@ export default function ChoreList() {
             <div className="Coin">
               <div className="InnerCoin"></div>
             </div>
-            <span className="point-value">{currentUser.pointReward}</span>
+            <span className="point-value">{currentUser?.pointReward ?? 0}</span>
           </div>
         </div>
         <img src={spongyImage} className="mascot"></img>
@@ -97,7 +99,18 @@ export default function ChoreList() {
                 <>
                   <div className="dim-overlay"></div>
                   <div className="chore-form-float">
-                    <AddNewChore onClose={() => setShowForm(false)} user={user}/>
+                  <AddNewChore
+                    onClose={() => setShowForm(false)}
+                    user={user}
+                    choreList={choreList}
+                    setChoreList={setChoreList}
+                    choreName={choreName}
+                    setChoreName={setChoreName}
+                    difficulty={difficulty}
+                    setDifficulty={setDifficulty}
+                    assignee="Unassigned"
+                    isDone={false}
+                  />
                   </div>
                 </>
               )}

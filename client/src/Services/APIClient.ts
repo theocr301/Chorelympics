@@ -8,6 +8,7 @@ interface User {
   profilePic: string;
 }
 interface Chore {
+  _id: string;
   name: string;
   difficulty: string;
   duration: number;
@@ -16,14 +17,28 @@ interface Chore {
   assignee: string;
 }
 
+function normalizeDifficulty(difficulty: string): "easy" | "medium" | "hard" {
+  switch (difficulty.toLowerCase()) {
+    case 'easy':
+      return 'easy';
+    case 'medium':
+      return 'medium';
+    case 'hard':
+      return 'hard';
+    default:
+      throw new Error('Invalid difficulty level');
+  }
+}
+
 export async function getAllChores(): Promise<Chore[] | undefined> {
   try {
-    const response = await fetch(`${baseUrl}/:user/chores`);
+    const response = await fetch(`${baseUrl}/chores`);
+    if (!response.ok) throw new Error('Failed to fetch chores');
     const data: Chore[] = await response.json();
     data.sort((a, b) => a.pointReward - b.pointReward);
     return data;
   } catch (error) {
-    console.log('Error fetching chores from the server');
+    console.error('Error fetching chores from the server:', error);
   }
 }
 
@@ -158,3 +173,5 @@ export async function generateChore(user: string, name: string, difficulty: stri
     console.log('Error creating chore');
   }
 }
+
+export default baseUrl;

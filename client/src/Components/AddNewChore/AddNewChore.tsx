@@ -3,25 +3,28 @@ import { generateChore } from '../../Services/APIClient';
 import { UserProps } from '../../types/user';
 import { ChoreProps } from '../../types/chore';
 
-export default function AddNewChore({onClose}: ChoreProps, { user }: UserProps) {
+export default function AddNewChore({ onClose, user }: ChoreProps & UserProps) {
   const [choreName, setChoreName] = useState(''); // chore.ts ChoreProps
   const [difficulty, setDifficulty] = useState(''); // chore.ts ChoreProps
 
-  async function handleChoreSubmit(event: React.MouseEvent<HTMLFormElement>): Promise<void> {
-      event.preventDefault();
-      const newChore = await generateChore(user, choreName, difficulty);
-      setChoreName(newChore);
+  async function handleChoreSubmit(event: React.FormEvent<HTMLFormElement>): Promise<void> {
+    event.preventDefault();
+    const newChore = await generateChore(user, choreName, difficulty);
+    if (newChore) {
+      setChoreName('');
+      setDifficulty('');
       onClose?.();
-    };
-  
-    function handleNameChange(event: React.ChangeEvent<HTMLInputElement>): void {
-      const choreName = event.target.value;
-      setChoreName(choreName);
-    };
-
-    function handleDifficultyChange(event: React.ChangeEvent<HTMLInputElement>): void {
-      setDifficulty(event.target.value);
     }
+  }
+
+  function handleNameChange(event: React.ChangeEvent<HTMLInputElement>): void {
+    const choreName = event.target.value;
+    setChoreName(choreName);
+  };
+
+  function handleDifficultyChange(event: React.ChangeEvent<HTMLInputElement>): void {
+    setDifficulty(event.target.value);
+  }
 
   return (
       <>

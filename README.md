@@ -1,6 +1,6 @@
 # Chorelympics
 
-I'd like to make a change to see if it wors properly.
+I'd like to make a change to see if it works properly.
 
 ## Project name
 

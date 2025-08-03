@@ -1,9 +1,10 @@
 import { useState, ChangeEvent, FormEvent } from 'react';
-import { generateUser } from '../../Services/APIClient';
+//import { generateUser } from '../../Services/APIClient';
 import { useNavigate } from 'react-router-dom';
 import './LandingPage.css';
 import spongyImage from '../../assets/Spongy.png';
-import baseUrl from '../../Services/baseUrl';
+
+const baseUrl = 'http://localhost:3000';
 
 interface User {
   name: string;
@@ -37,6 +38,15 @@ export default function LandingPage({setUser}: LandingPageProps) {
     }
   }
 
+  async function handleSubmit(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    const user = await generateUser(userName);
+    if (user) {
+      setUser(user);
+      navigate(`/chores/${user.name}`);
+    }
+  }
+
   function handleNameChange (event: ChangeEvent<HTMLInputElement>) {
     setUserName(event.target.value);
   };
@@ -48,7 +58,7 @@ export default function LandingPage({setUser}: LandingPageProps) {
       <img src={spongyImage} className="spongy"></img>
       <div className="form-container">
         <span className="nameQuestion">What's your name?</span>
-        <form className="submit-form" type="submit" onSubmit={handleSubmit}>
+        <form className="submit-form" onSubmit={handleSubmit}>
           <input name="nameInput" className="inputBox" value={userName} onChange={handleNameChange} required></input>
           <button className="formButton" type="submit">CONTINUE</button>
         </form>
