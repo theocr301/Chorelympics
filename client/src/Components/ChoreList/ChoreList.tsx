@@ -4,8 +4,9 @@ import ChoreItem from '../ChoreItem/ChoreItem'
 import { useParams } from 'react-router';
 import Leaderboard from '../Leaderboard/Leaderboard';
 import AddNewChore from '../AddNewChore/AddNewChore';
-import spongyImage from '../assets/Spongy.png';
+import spongyImage from './assets/Spongy.png';
 import { useNavigate } from 'react-router-dom';
+
 
 import './ChoreList.css';
 
