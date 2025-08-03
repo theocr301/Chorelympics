@@ -1,31 +1,61 @@
 import { useEffect, useState } from 'react'
-import { getAllChores, getCurrentUser, logoutUser } from '../../Services/APIClient.js'
-import ChoreItem from '../ChoreItem/ChoreItem.jsx'
-import './ChoreList.css';
+import { getAllChores, getCurrentUser, logoutUser } from '../../Services/APIClient'
+import ChoreItem from '../ChoreItem/ChoreItem'
 import { useParams } from 'react-router';
-import { useNavigate } from 'react-router';
-import Leaderboard from '../Leaderboard/Leaderboard.jsx';
-import AddNewChore from '../AddNewChore/AddNewChore.jsx';
-import spongyImage from '../../assets/Spongy.png';
+import Leaderboard from '../Leaderboard/Leaderboard';
+import AddNewChore from '../AddNewChore/AddNewChore';
+import spongyImage from '../assets/Spongy.png';
+import { useNavigate } from 'react-router-dom';
+
+import './ChoreList.css';
+
+interface Chore {
+  name: string,
+  difficulty: string,
+  duration: number,
+  isDone: boolean,
+  pointReward: number,
+  assignee: string,
+}
+interface User {
+  name: string;
+  pointReward: number;
+  assignedChores: string[];
+  isCurrent: boolean;
+  profilePic: string;
+}
+
+interface RouteParams {
+  user: string;
+}
 
 export default function ChoreList() {
-  const [choreList, setChoreList] = useState([]);
-  const [currentUser, setCurrentUser] = useState({});
-  const { user } = useParams();
+  const [choreList, setChoreList] = useState<Chore[]>([]);
+  const [currentUser, setCurrentUser] = useState<User>({} as User);
+  const { user } = useParams<RouteParams>();
   const navigate = useNavigate();
-  const myProfile = user.charAt(0).toUpperCase() + user.slice(1);
   const [showForm, setShowForm] = useState(false);
-  const unassignedChores = choreList.filter(choreItem => choreItem.assignee === 'Unassigned' && choreItem.isDone === false);
-  const myAssignedChores = choreList.filter(choreItem => choreItem.assignee !== 'Unassigned' && choreItem.isDone === false);
-  const myCompletedChores = choreList.filter(choreItem => choreItem.isDone === true);
+
+  if (!user) return null; // Safety check
+
+  const myProfile = user.charAt(0).toUpperCase() + user.slice(1);
+
+  const unassignedChores = choreList.filter(
+    (choreItem) => choreItem.assignee === 'Unassigned' && !choreItem.isDone
+  );
+  const myAssignedChores = choreList.filter(
+    (choreItem) => choreItem.assignee !== 'Unassigned' && !choreItem.isDone
+  );
+  const myCompletedChores = choreList.filter((choreItem) => choreItem.isDone);
 
   async function handleLogout() {
-    logoutUser(user).then(setCurrentUser);
+    await logoutUser(user)
+    setCurrentUser({} as User);
     navigate(`/`)
   }
 
-  async function handleNewChore() {
-    setShowForm(previous => !previous);
+  function handleNewChore() {
+    setShowForm((prev) => !prev);
   }
 
   useEffect(() => {
