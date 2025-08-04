@@ -16,9 +16,9 @@ function normalizeDifficulty(difficulty: string): "easy" | "medium" | "hard" {
   }
 }
 
-export async function getAllChores(): Promise<Chore[] | undefined> {
+export async function getAllChores(user: string): Promise<Chore[] | undefined> {
   try {
-    const response = await fetch(`${baseUrl}/chores`);
+    const response = await fetch(`${baseUrl}/${user}/chores`);
     if (!response.ok) throw new Error('Failed to fetch chores');
     const data: Chore[] = await response.json();
     data.sort((a, b) => a.pointReward - b.pointReward);
@@ -35,7 +35,7 @@ export async function generateUser(name: string): Promise<string | undefined> {
       body: JSON.stringify({ name, isCurrent: true}),
       headers: {"Content-Type": "application/json"}
     });
-    const data = await response.text();
+    const data = await response.json();
     return data;
   } catch (error) {
     console.log(error);

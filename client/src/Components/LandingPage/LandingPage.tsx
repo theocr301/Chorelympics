@@ -1,42 +1,22 @@
 import { useState, ChangeEvent, FormEvent } from 'react';
-//import { generateUser } from '../../Services/APIClient';
 import { useNavigate } from 'react-router-dom';
 import './LandingPage.css';
 import spongyImage from '../../assets/Spongy.png';
-import { User } from '../../types/user';
+import { LandingPageProps } from '../../types/user';
+import { generateUser } from '../../Services/APIClient';
 
 const baseUrl = 'http://localhost:3000';
-
-interface LandingPageProps {
-  setUser: (user: User) => void;
-}
 
 export default function LandingPage({setUser}: LandingPageProps) {
   const [userName, setUserName] = useState<string>('');
   const navigate = useNavigate();
-
-  async function generateUser(name: string): Promise<User | null> {
-    try {
-      const response = await fetch(`${baseUrl}/users`, {
-        method: "POST",
-        body: JSON.stringify({ name, isCurrent: true }),
-        headers: { "Content-Type": "application/json" }
-      });
-      if (!response.ok) return null;
-      const data: User = await response.json();
-      return data;
-    } catch (error) {
-      console.log(error);
-      return null;
-    }
-  }
 
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     const user = await generateUser(userName);
     if (user) {
       setUser(user);
-      navigate(`/chores/${user.name}`);
+      navigate(`/${user}/chores`);
     }
   }
 
