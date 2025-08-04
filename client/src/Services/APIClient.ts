@@ -1,21 +1,7 @@
-const baseUrl = 'http://localhost:3000';
+import { User } from '../types/user';
+import { Chore } from '../types/chore';
 
-interface User {
-  name: string;
-  pointReward: number;
-  assignedChores: string[];
-  isCurrent: boolean;
-  profilePic: string;
-}
-interface Chore {
-  _id: string;
-  name: string;
-  difficulty: string;
-  duration: number;
-  isDone: boolean;
-  pointReward: number;
-  assignee: string;
-}
+const baseUrl = 'http://localhost:3000';
 
 function normalizeDifficulty(difficulty: string): "easy" | "medium" | "hard" {
   switch (difficulty.toLowerCase()) {

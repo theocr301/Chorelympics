@@ -3,16 +3,9 @@ import { useState, ChangeEvent, FormEvent } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './LandingPage.css';
 import spongyImage from '../../assets/Spongy.png';
+import { User } from '../../types/user';
 
 const baseUrl = 'http://localhost:3000';
-
-interface User {
-  name: string;
-  pointReward: number;
-  assignedChores: string[];
-  isCurrent: boolean;
-  profilePic: string;
-}
 
 interface LandingPageProps {
   setUser: (user: User) => void;

@@ -1,12 +1,7 @@
-//import { UserProps } from '../../types/user';
 import './UserItem.css';
-import { User } from '../../types/user';
+import { UserProps } from '../../types/user';
 
-interface UserItemProps {
-  userItem: User;
-}
-
-export default function UserItem({userItem}: UserItemProps) {
+export default function UserItem({userItem}: UserProps) {
 
   return (
     <>

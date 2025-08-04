@@ -7,23 +7,15 @@ import AddNewChore from '../AddNewChore/AddNewChore';
 import spongyImage from '../../assets/Spongy.png';
 import { useNavigate } from 'react-router-dom';
 import { Chore } from '../../types/chore';
-
+import { User } from '../../types/user';
 import './ChoreList.css';
-
-interface User {
-  name: string;
-  pointReward: number;
-  assignedChores: string[];
-  isCurrent: boolean;
-  profilePic: string;
-}
 
 export default function ChoreList() {
   const [choreList, setChoreList] = useState<Chore[]>([]);
   const [choreName, setChoreName] = useState<string>('');
-const [difficulty, setDifficulty] = useState<'easy' | 'medium' | 'hard'>('easy');
+  const [difficulty, setDifficulty] = useState<'easy' | 'medium' | 'hard'>('easy');
   const [currentUser, setCurrentUser] = useState<User | null>(null);
-  const { user } = useParams<{ user?: string }>();
+  const { user } = useParams();
   const navigate = useNavigate();
   const [showForm, setShowForm] = useState(false);
 

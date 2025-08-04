@@ -1,14 +1,8 @@
 import './ChoreItem.css';
 import { assignChore, completeChore, unassignChore, reopenChore } from '../../Services/APIClient.js';
-import { Chore } from '../../types/chore';
+import { ChoreItemProps } from '../../types/chore';
 
-interface ChoreItemProps {
-  choreItem: Chore;
-  user: string;
-  setChoreList: React.Dispatch<React.SetStateAction<Chore[]>>;
-}
-
-export default function ChoreItem({ choreItem, user, setChoreList }: ChoreItemProps) {
+export default function ChoreItem({ choreItem, setChoreList, user }: ChoreItemProps) {
   const difficultyImages = {
   easy: '/Easy.svg',
   medium: '/Medium.svg',
