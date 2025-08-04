@@ -15,3 +15,11 @@ export interface UserProps {
   userList: User[],
   setUserList: React.Dispatch<React.SetStateAction<User[]>>,
 }
+
+export interface UserItemProps {
+  userItem: User,
+}
+
+export interface LandingPageProps {
+  setUser: React.Dispatch<React.SetStateAction<string>>,
+}

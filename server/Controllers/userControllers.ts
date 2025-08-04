@@ -33,11 +33,12 @@ export const generateUser = async (req: Request, res: Response): Promise<void> =
   }
   try {
     const existingUsers = await User.find({});
-    let found = existingUsers.find((user) => user.name === name);
+    const parsedName = parseName(name);
+    let found = existingUsers.find((user) => user.name === parsedName);
     let responseData: IUser;
     if (found) {
       const updatedUser = await User.findOneAndUpdate(
-        { name: parseName(name) },
+        { name: parsedName },
         { $set: { isCurrent: true } },
         { new: true }
       );
@@ -45,12 +46,12 @@ export const generateUser = async (req: Request, res: Response): Promise<void> =
       responseData = updatedUser;
     } else {
       const newUser = new User({
-        name: parseName(name),
+        name: parsedName,
         isCurrent: true,
       });
       responseData = await newUser.save();
     }
-    res.status(201).send(responseData.name);
+    res.status(201).json(responseData.name);
   } catch (error) {
     console.error(error);
     res.status(400).send('Something went wrong while creating the user. It might already exist in the DB.');

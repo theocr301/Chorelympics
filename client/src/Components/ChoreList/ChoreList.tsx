@@ -15,7 +15,7 @@ export default function ChoreList() {
   const [choreName, setChoreName] = useState<string>('');
   const [difficulty, setDifficulty] = useState<'easy' | 'medium' | 'hard'>('easy');
   const [currentUser, setCurrentUser] = useState<User | null>(null);
-  const { user } = useParams();
+  const { user } = useParams<{ user: string }>();
   const navigate = useNavigate();
   const [showForm, setShowForm] = useState(false);
 
@@ -53,7 +53,7 @@ export default function ChoreList() {
   }
 
   useEffect(() => {
-    getAllChores().then((chores) => {
+    getAllChores(user).then((chores) => {
       if (chores) {
         const transformedChores = chores.map((chore) => ({
           ...chore,
