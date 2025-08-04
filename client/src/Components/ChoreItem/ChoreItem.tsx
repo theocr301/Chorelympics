@@ -1,13 +1,12 @@
 import './ChoreItem.css';
 import { assignChore, completeChore, unassignChore, reopenChore } from '../../Services/APIClient.js';
-import { UserProps } from '../../types/user';
-import { ChoreProps } from '../../types/chore';
+import { ChoreItemProps } from '../../types/chore';
 
-export default function ChoreItem({user}: UserProps, {choreItem, setChoreList}: ChoreProps) {
+export default function ChoreItem({ choreItem, setChoreList, user }: ChoreItemProps) {
   const difficultyImages = {
-  Easy: '/Easy.svg',
-  Medium: '/Medium.svg',
-  Hard: '/Hard.svg',
+  easy: '/Easy.svg',
+  medium: '/Medium.svg',
+  hard: '/Hard.svg',
   };
 
   async function handleAssign(event: React.MouseEvent<HTMLButtonElement>): Promise<void> {

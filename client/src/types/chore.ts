@@ -1,6 +1,7 @@
 export type Chore = {
+  _id: string,
   name: string,
-  difficulty: 'Easy' | 'Medium' | 'Hard',
+  difficulty: 'easy' | 'medium' | 'hard',
   duration: number,
   isDone: boolean,
   pointReward: number,
@@ -10,10 +11,30 @@ export type Chore = {
 export interface ChoreProps {
   choreItem: Chore,
   choreList: Chore[],
+  assignee: string,
+  isDone: boolean,
   setChoreList: React.Dispatch<React.SetStateAction<Chore[]>>,
   choreName: string,
   setChoreName: React.Dispatch<React.SetStateAction<string>>,
-  difficulty: string,
-  setDifficulty: React.Dispatch<React.SetStateAction<string>>,
-  onClose: () => void
+  difficulty: "easy" | "medium" | "hard";
+  setDifficulty: React.Dispatch<React.SetStateAction<"easy" | "medium" | "hard">>,
+  onClose: () => void,
+  user: string,
+}
+export interface ChoreItemProps {
+  choreItem: Chore,
+  user: string,
+  setChoreList: React.Dispatch<React.SetStateAction<Chore[]>>
+}
+export interface AddChoreProps {
+  choreList: Chore[],
+  assignee: string,
+  isDone: boolean,
+  setChoreList: React.Dispatch<React.SetStateAction<Chore[]>>,
+  choreName: string,
+  setChoreName: React.Dispatch<React.SetStateAction<string>>,
+  difficulty: "easy" | "medium" | "hard";
+  setDifficulty: React.Dispatch<React.SetStateAction<"easy" | "medium" | "hard">>,
+  onClose: () => void,
+  user: string,
 }
