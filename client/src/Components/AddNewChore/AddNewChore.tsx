@@ -1,35 +1,36 @@
 import { useState } from 'react';
 import { generateChore } from '../../Services/APIClient';
-import { UserProps } from '../../types/user';
 import { ChoreProps } from '../../types/chore';
 
-export default function AddNewChore({onClose}: ChoreProps, { user }: UserProps) {
-  const [choreName, setChoreName] = useState(''); // chore.ts ChoreProps
-  const [difficulty, setDifficulty] = useState(''); // chore.ts ChoreProps
+export default function AddNewChore({ onClose, user }: ChoreProps) {
+  const [choreName, setChoreName] = useState('');
+  const [difficulty, setDifficulty] = useState('');
 
-  async function handleChoreSubmit(event: React.MouseEvent<HTMLFormElement>): Promise<void> {
-      event.preventDefault();
-      const newChore = await generateChore(user, choreName, difficulty);
-      setChoreName(newChore);
+  async function handleChoreSubmit(event: React.FormEvent<HTMLFormElement>): Promise<void> {
+    event.preventDefault();
+    const newChore = await generateChore(user, choreName, difficulty);
+    if (newChore) {
+      setChoreName('');
+      setDifficulty('');
       onClose?.();
-    };
-  
-    function handleNameChange(event: React.ChangeEvent<HTMLInputElement>): void {
-      const choreName = event.target.value;
-      setChoreName(choreName);
-    };
-
-    function handleDifficultyChange(event: React.ChangeEvent<HTMLInputElement>): void {
-      setDifficulty(event.target.value);
     }
+  }
+
+  function handleNameChange(event: React.ChangeEvent<HTMLInputElement>): void {
+    setChoreName(event.target.value);
+  }
+
+  function handleDifficultyChange(event: React.ChangeEvent<HTMLInputElement>): void {
+    setDifficulty(event.target.value);
+  }
 
   return (
-      <>
+    <>
       <div className="spongy-sticker">
         <div className="form-container">
           <span className="nameQuestion">What's the chore you want to add?</span>
           <form className="submit-form" onSubmit={handleChoreSubmit}>
-            <input name="nameInput" className="inputBox" value={choreName} onChange={handleNameChange} required></input>
+            <input name="nameInput" className="inputBox" value={choreName} onChange={handleNameChange} required />
             <span className="nameQuestion">Difficulty?</span>
             <div className="difficulty-wrapper">
               <label>
@@ -63,10 +64,10 @@ export default function AddNewChore({onClose}: ChoreProps, { user }: UserProps) 
                 HARD
               </label>
             </div>
-          <button className="formButton" type="submit">CONTINUE</button>
+            <button className="formButton" type="submit">CONTINUE</button>
           </form>
         </div>
       </div>
-      </>
-    )
+    </>
+  );
 }
