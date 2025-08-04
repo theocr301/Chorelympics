@@ -31,22 +31,18 @@ More logic: ChoreItem.jsx, ChoreList.jsx, APIClient.js
 | ~~APIClient.js~~ |  |
 
 ## Add unit tests
-1. Server tests
+Server and Client tests
 
 | Theodore | Luana |
 | ----------- | ----------- |
-|  |  |
+| client tests | server tests |
 
-2. Client tests
 
-| Theodore | Luana |
-| ----------- | ----------- |
-|  |  |
-
-## Extras
+## Extra Credits
 1. Refactor endpoints
 - assign and unassign into one
 - mark complete and mark not complete into on
+- accessibility refactor
 
 ---
 ## Typescript dependencies
