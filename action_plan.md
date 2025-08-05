@@ -37,6 +37,8 @@ Server and Client tests
 | ----------- | ----------- |
 | client tests | server tests |
 
+## Refactor for consistency
+- Make User an object throughout the whole code
 
 ## Extra Credits
 1. Refactor endpoints
