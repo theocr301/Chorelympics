@@ -37,6 +37,8 @@ Server and Client tests
 | ----------- | ----------- |
 | client tests | server tests |
 
+## Refactor for consistency
+- Make User an object throughout the whole code
 
 ## Extra Credits
 1. Refactor endpoints
@@ -118,3 +120,13 @@ uncomment and/or add the necessary lines in tsconfig.js
   "include": ["src"]
 }
 ```
+
+## Testing dependencies
+
+1. Server
+
+`npm i --save-dev ts-jest @types/jest supertest @types/supertest tslib mongodb-memory-server`
+
+`npx ts-jest config:init`
+
+2. Client
