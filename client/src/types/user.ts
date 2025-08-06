@@ -6,20 +6,54 @@ export type User = {
   profilePic: string,
 }
 
+//TODO not using
 export interface UserProps {
   userItem: User,
-  user: string,
-  setUser: React.Dispatch<React.SetStateAction<string>>,
-  currentUser: string,
-  setCurrentUser: React.Dispatch<React.SetStateAction<string>>,
+  user: User,
+  setUser: React.Dispatch<React.SetStateAction<User>>,
+  currentUser: User,
+  setCurrentUser: React.Dispatch<React.SetStateAction<User>>,
   userList: User[],
   setUserList: React.Dispatch<React.SetStateAction<User[]>>,
 }
 
+//using
 export interface UserItemProps {
   userItem: User,
 }
 
+//using
 export interface LandingPageProps {
-  setUser: React.Dispatch<React.SetStateAction<string>>,
+  setCurrentUser: React.Dispatch<React.SetStateAction<User | null>>,
+  setUserList: React.Dispatch<React.SetStateAction<User[]>>,
+}
+
+//TODO notUsing
+// export interface UserAppProps {
+//   user: User | null,
+//   setUser: React.Dispatch<React.SetStateAction<User | null>>
+// }
+
+//user
+export interface ChoreListProps {
+  currentUser: User,
+  setCurrentUser: React.Dispatch<React.SetStateAction<User | null>>,
+  userList: User[],
+  setUserList: React.Dispatch<React.SetStateAction<User[]>>,
+}
+
+//using
+export interface LeaderboardProps {
+  userList: User[],
+}
+
+//using
+export interface AddNewChoreUserProps {
+  currentUser: User | null,
+}
+
+//using
+export interface ChoreItemUserProp {
+  currentUser: User,
+  setUserList: React.Dispatch<React.SetStateAction<User[]>>,
 }

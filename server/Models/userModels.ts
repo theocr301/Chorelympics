@@ -20,7 +20,7 @@ const UserSchema = new mongoose.Schema({
     type: Number,
     default: 0
   },
-  assignedChores: {
+  assignedChores: { //TODO change to Array of Object Id of chores
     type: Array,
     default: []
   },

@@ -1,24 +1,22 @@
 import { useState } from 'react';
 import { generateChore } from '../../Services/APIClient';
-import { AddChoreProps } from '../../types/chore';
+import { AddNewChoreProps } from '../../types/chore';
+import { AddNewChoreUserProps } from '../../types/user';
 
-export default function AddNewChore({ onClose, user }: AddChoreProps) {
+type props = AddNewChoreProps & AddNewChoreUserProps;
+
+export default function AddNewChore({ onClose, currentUser }: props) {
   const [choreName, setChoreName] = useState('');
   const [difficulty, setDifficulty] = useState('');
 
   async function handleChoreSubmit(event: React.FormEvent<HTMLFormElement>): Promise<void> {
     event.preventDefault();
-    const newChore = await generateChore(user, choreName, difficulty);
-    // if (newChore) {
-    //   setChoreName('');
-    //   setDifficulty('');
-    //   onClose?.();
-    // }
+    const newChore = await generateChore(currentUser.name, choreName, difficulty);
     setChoreName(newChore);
     onClose?.();
   }
 
-  function handleNameChange(event: React.ChangeEvent<HTMLInputElement>): void {
+  function handleChoreNameChange(event: React.ChangeEvent<HTMLInputElement>): void {
     setChoreName(event.target.value);
   }
 
@@ -32,7 +30,7 @@ export default function AddNewChore({ onClose, user }: AddChoreProps) {
         <div className="form-container">
           <span className="nameQuestion">What's the chore you want to add?</span>
           <form className="submit-form" onSubmit={handleChoreSubmit}>
-            <input name="nameInput" className="inputBox" value={choreName} onChange={handleNameChange} required />
+            <input name="nameInput" className="inputBox" value={choreName} onChange={handleChoreNameChange} required />
             <span className="nameQuestion">Difficulty?</span>
             <div className="difficulty-wrapper">
               <label>

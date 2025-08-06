@@ -42,7 +42,7 @@ export async function getCurrentUser(): Promise<User | undefined> {
   }
 }
 
-export async function generateUser(name: string): Promise<string | undefined> {
+export async function generateUser(name: string): Promise<User | undefined> {
   try {
     const response = await fetch(`${baseUrl}/users`, {
       method: "POST",
@@ -57,7 +57,7 @@ export async function generateUser(name: string): Promise<string | undefined> {
   }
 }
 
-export async function logoutUser(): Promise<string | undefined> {
+export async function logoutUser(): Promise<User | undefined> {
   try {
     const response = await fetch(`${baseUrl}/users/logout`, {
       method: "PUT",
@@ -94,6 +94,7 @@ export async function assignChore(user: string, name: string): Promise<any> {
       method: "PUT",
     });
     const data = await response.json();
+    console.log('assign chore data: ', data);
     return data;
   } catch (error) {
     console.log(error);
@@ -109,6 +110,7 @@ export async function unassignChore(user: string, name: string): Promise<any> {
       method: "PUT",
     });
     const data = await response.json();
+    console.log('unassign chore data: ', data);
     return data;
   } catch (error) {
     console.log(error);
@@ -124,6 +126,7 @@ export async function completeChore(user: string, name: string): Promise<any>{
       method: "PUT",
     });
     const data = await response.json();
+    console.log('complete chore data: ', data);
     return data;
   } catch (error) {
     console.log(error);
@@ -139,6 +142,7 @@ export async function reopenChore(user: string, name: string): Promise<any> {
       method: "PUT",
     });
     const data = await response.json();
+    console.log('reopen chore data: ', data);
     return data;
   } catch (error) {
     console.log(error);

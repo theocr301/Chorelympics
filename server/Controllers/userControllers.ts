@@ -34,10 +34,7 @@ export const generateUser = async (req: Request, res: Response): Promise<void> =
   }
   try {
     const parsedName = parseName(name);
-    // const existingUsers = await User.find({});
-    const existingUser = await User.findOne({ name: parsedName })
-    // let found = existingUsers.find((user) => user.name === parsedName);
-    // let responseData: IUser
+    const existingUser = await User.findOne({ name: parsedName });
 
     let user;
     if (existingUser) {
@@ -56,21 +53,6 @@ export const generateUser = async (req: Request, res: Response): Promise<void> =
       })
       user = newUser;
     }
-    // if (found) {
-    //   const updatedUser = await User.findOneAndUpdate(
-    //     { name: parsedName },
-    //     { $set: { isCurrent: true } },
-    //     { new: true }
-    //   );
-    //   if (!updatedUser) throw new Error('User not found for update');
-    //   responseData = updatedUser;
-    // } else {
-    //   const newUser = new User({
-    //     name: parsedName,
-    //     isCurrent: true,
-    //   });
-    //   responseData = await newUser.save();
-    // }
     res.status(201).json(user);
   } catch (error) {
     console.error(error);
@@ -79,10 +61,8 @@ export const generateUser = async (req: Request, res: Response): Promise<void> =
 };
 
 export const logoutUser = async (req: Request, res: Response) : Promise<void> => {
-  const { user } = req.params;
-
   try {
-    const data = await User.findOneAndUpdate({ name: parseName(user) }, { $set: { 'isCurrent': false } }, { new: true })
+    const data = await User.findOneAndUpdate({ isCurrent: true }, { $set: { 'isCurrent': false } }, { new: true })
     res.status(200);
     res.send(data);
   } catch (error) {
