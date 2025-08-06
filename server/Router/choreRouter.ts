@@ -2,18 +2,18 @@ import { Router } from 'express';
 import {
   getAllChores,
   generateChore,
-  markChoreComplete,
-  markChoreNotComplete,
-  assignChore, 
-  unassignChore,
+  toggleIsDone,
+  changeAssignment
 } from '../Controllers/choreControllers';
 const router = Router();
 
-router.get('/:user/chores', getAllChores);
-router.post('/:user/chores', generateChore);
-router.put('/:user/chores/markcomplete/:name', markChoreComplete);
-router.put('/:user/chores/marknotcomplete/:name', markChoreNotComplete);
-router.put('/:user/chores/assign/:name', assignChore);
-router.put('/:user/chores/unassign/:name', unassignChore);
+router.get('/chores', getAllChores);
+router.post('/chores', generateChore);
+// router.put('/chores/markcomplete', markChoreComplete);
+// router.put('/chores/marknotcomplete', markChoreNotComplete);
+router.put('/chores/toggleIsDone', toggleIsDone);
+// router.put('/chores/assign', assignChore);
+// router.put('/chores/unassign', unassignChore);
+router.put('/chores/change-assignment', changeAssignment);
 
 export default router;

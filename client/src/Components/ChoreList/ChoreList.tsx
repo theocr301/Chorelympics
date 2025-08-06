@@ -1,37 +1,20 @@
-import { useEffect, useState } from 'react'
-import { getAllChores, getCurrentUser, logoutUser } from '../../Services/APIClient'
-import ChoreItem from '../ChoreItem/ChoreItem'
-import { useParams } from 'react-router';
-import Leaderboard from '../Leaderboard/Leaderboard';
-import AddNewChore from '../AddNewChore/AddNewChore';
-import spongyImage from '../../assets/Spongy.png';
-import { useNavigate } from 'react-router-dom';
-import { Chore } from '../../types/chore';
-import { User, ChoreListProps } from '../../types/user';
 import './ChoreList.css';
+import spongyImage from '../../assets/Spongy.png';
+import { useEffect, useState } from 'react'
+import { useNavigate } from 'react-router-dom';
+import AddNewChore from '../AddNewChore/AddNewChore';
+import ChoreItem from '../ChoreItem/ChoreItem'
+import Leaderboard from '../Leaderboard/Leaderboard';
+import { Chore, ChoreListProps } from '../../types/types';
+import { logoutUser } from '../../Services/APIClient'
 
-export default function ChoreList({ currentUser, setCurrentUser, userList, setUserList }: ChoreListProps) {
-  const [choreList, setChoreList] = useState<Chore[]>([]);
-  // const [choreName, setChoreName] = useState<string>('');
-  // const [difficulty, setDifficulty] = useState<'easy' | 'medium' | 'hard'>('easy');
-  const { user } = useParams<{ user: string }>();
+export default function ChoreList({ currentUser, setCurrentUser, userList, setUserList, choreList, setChoreList }: ChoreListProps) {
   const navigate = useNavigate();
   const [showForm, setShowForm] = useState(false);
 
-  if (!user) return null; // Safety check
-
-  const myProfile = user.charAt(0).toUpperCase() + user.slice(1);
-  // console.log(user);
-  // console.log('myPRofile: ', myProfile);
-  // console.log('current user in chorelist: ', currentUser);
-
-  const unassignedChores = choreList.filter(
-    (choreItem) => choreItem.assignee === 'Unassigned' && !choreItem.isDone
-  );
-  const myAssignedChores = choreList.filter(
-    (choreItem) => choreItem.assignee !== 'Unassigned' && !choreItem.isDone
-  );
-  const myCompletedChores = choreList.filter((choreItem) => choreItem.isDone);
+  const [unassignedChores, setUnassignedChores] = useState<Chore[]>([]);
+  const [assignedChores, setAssignedChores] = useState<Chore[]>([]);
+  const [doneChores, setDoneChores] = useState<Chore[]>([]);
 
   async function handleLogout() {
     if (currentUser) {
@@ -44,27 +27,30 @@ export default function ChoreList({ currentUser, setCurrentUser, userList, setUs
   function handleNewChore() {
     setShowForm((prev) => !prev);
   }
-
-  function normalizeDifficulty(difficulty: string): "easy" | "medium" | "hard" {
-    switch (difficulty.toLowerCase()) {
-      case "easy": return "easy";
-      case "medium": return "medium";
-      case "hard": return "hard";
-      default: throw new Error("Unknown difficulty");
-    }
-  }
+  console.log(choreList);
 
   useEffect(() => {
-    getAllChores(user).then((chores) => {
-      if (chores) {
-        const transformedChores = chores.map((chore) => ({
-          ...chore,
-          difficulty: normalizeDifficulty(chore.difficulty),
-        }));
-        setChoreList(transformedChores);
-      }
-    });
-  }, []);
+    const unassigned = choreList.filter(
+      (chore) => !chore.assignee && !chore.isDone
+    );
+    const assigned = choreList.filter(
+    (chore) =>
+      chore.assignee &&
+      !chore.isDone &&
+      (
+        // If assignee is populated user object
+        (typeof chore.assignee === 'object' && 'name' in chore.assignee && chore.assignee._id.toString() === currentUser._id.toString())
+        // Or if assignee is just an ObjectId
+        || (chore.assignee === currentUser._id)
+      )
+  );
+    const done = choreList.filter(
+      (chore) => chore.isDone
+    );
+    setAssignedChores(assigned);
+    setUnassignedChores(unassigned);
+    setDoneChores(done);
+  }, [choreList, currentUser]);
 
   return (
     <>
@@ -73,10 +59,10 @@ export default function ChoreList({ currentUser, setCurrentUser, userList, setUs
           <div className="MyProfile">
             <div className="profile-info">
               <div className="user-avatar">
-                <img src={`/${currentUser?.profilePic ?? 'Avatar.svg'}`}></img>
+                <img src={`/${currentUser.profilePic ?? 'Avatar.svg'}`}></img>
               </div>
               <div className="user-name">
-                {currentUser?.name}
+                {currentUser.name}
               </div>
             </div>
             <button className="changeUserButton" type="submit" onClick={handleLogout}>CHANGE USER</button>
@@ -85,7 +71,7 @@ export default function ChoreList({ currentUser, setCurrentUser, userList, setUs
             <div className="Coin">
               <div className="InnerCoin"></div>
             </div>
-            <span className="point-value">{currentUser?.pointReward ?? 0}</span>
+            <span className="point-value">{currentUser.pointReward ?? 0}</span>
           </div>
         </div>
         <img src={spongyImage} className="mascot"></img>
@@ -102,15 +88,7 @@ export default function ChoreList({ currentUser, setCurrentUser, userList, setUs
                   <AddNewChore
                     onClose={() => setShowForm(false)}
                     currentUser={currentUser}
-                    //TODO none of these are being passed
-                    // choreList={choreList}
-                    // setChoreList={setChoreList}
-                    // choreName={choreName}
-                    // setChoreName={setChoreName}
-                    // difficulty={difficulty}
-                    // setDifficulty={setDifficulty}
-                    // assignee="Unassigned"
-                    // isDone={false}
+                    setChoreList={setChoreList}
                   />
                   </div>
                 </>
@@ -125,7 +103,7 @@ export default function ChoreList({ currentUser, setCurrentUser, userList, setUs
                 Unassigned ({unassignedChores.length})</div>
               {unassignedChores.map(choreItem => (
                 <ChoreItem 
-                  key={choreItem._id} 
+                  key={choreItem._id.toString()} 
                   choreItem={choreItem} 
                   currentUser={currentUser} 
                   setChoreList={setChoreList}
@@ -135,10 +113,10 @@ export default function ChoreList({ currentUser, setCurrentUser, userList, setUs
             <div className="AssignedChores">
               <div className="chore-header">
                 <div className="assigned-circle"></div>
-                To Do ({myAssignedChores.length})</div>
-              {myAssignedChores.map(choreItem => (
+                To Do ({assignedChores.length})</div>
+              {assignedChores.map(choreItem => (
                 <ChoreItem 
-                  key={choreItem._id} 
+                  key={choreItem._id.toString()} 
                   choreItem={choreItem} 
                   currentUser={currentUser} 
                   setChoreList={setChoreList}
@@ -148,10 +126,10 @@ export default function ChoreList({ currentUser, setCurrentUser, userList, setUs
             <div className="CompletedChores">
               <div className="chore-header">
                 <div className="completed-circle"></div>
-                Done ({myCompletedChores.length})</div>
-              {myCompletedChores.map(choreItem => (
+                Done ({doneChores.length})</div>
+              {doneChores.map(choreItem => (
                 <ChoreItem 
-                  key={choreItem._id} 
+                  key={choreItem._id.toString()} 
                   choreItem={choreItem} 
                   currentUser={currentUser} 
                   setChoreList={setChoreList}
