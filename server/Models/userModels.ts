@@ -1,8 +1,8 @@
 import mongoose from '../db';
-import { Schema, Document, Model } from 'mongoose';
+import { Model } from 'mongoose';
 import { IChore } from './choreModels';
 
-export interface IUser extends Document {
+export interface IUser extends mongoose.Document {
   name: string;
   pointReward: number;
   assignedChores: Model<IChore>[];

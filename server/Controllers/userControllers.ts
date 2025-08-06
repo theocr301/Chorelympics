@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import User, { IUser } from '../Models/userModels';
+import User from '../Models/userModels';
 import { parseName } from '../utils';
 
 export const getAllUsers = async (req: Request, res: Response): Promise<void> => {
