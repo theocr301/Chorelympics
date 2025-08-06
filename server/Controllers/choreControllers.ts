@@ -8,8 +8,7 @@ import { Request, Response } from 'express';
 export const getAllChores = async function (request: Request, response: Response) {
   try {
     const data = await Chore.find({});
-    response.status(200);
-    response.send(data);
+    response.status(200).send(data);
   } catch (error) {
     response.status(400).send(error);
   }

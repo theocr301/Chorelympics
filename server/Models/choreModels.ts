@@ -45,6 +45,7 @@ const Chore = mongoose.model<Chore>('Chore', ChoreSchema);
 
 // TODO build a function here that imports User from userModel and pushed the chore id to the user choresArray - done i think?
 // TODO find the correct chore, invoke this function in choreController - done i think?
+//assign
 const pushChore = async function (user: string, choreName: string): Promise<any> {
   try {
     const updatedChore = await Chore.findOneAndUpdate(
@@ -65,6 +66,7 @@ const pushChore = async function (user: string, choreName: string): Promise<any>
 };
 
 //TODO refactor this to follow pushCore - done i think?
+//unassign
 const removeChore = async function (user: string, choreName: string): Promise<any> {
   try {
     const updatedChore = await Chore.findOneAndUpdate(
@@ -83,7 +85,7 @@ const removeChore = async function (user: string, choreName: string): Promise<an
     return error;
   }
 };
-
+//mark as done
 const closeChore = async function (user: string, choreName: string): Promise<any> {
   try {
     const updatedChore = await Chore.findOneAndUpdate(
@@ -106,7 +108,7 @@ const closeChore = async function (user: string, choreName: string): Promise<any
     return error;
   }
 };
-
+//mark as not done
 const reopenChore = async function (user: string, choreName: string): Promise<any> {
   try {
     const updatedChore = await Chore.findOneAndUpdate(
