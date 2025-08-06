@@ -2,7 +2,7 @@
 import { parseName } from '../utils';
 import Chore from '../Models/choreModels';
 import { Request, Response } from 'express';
-import User from 'Models/userModels';
+import User from '../Models/userModels';
 
 const choreDifficultyPoints: Record<string, number> = {
   easy: 100,
@@ -11,9 +11,9 @@ const choreDifficultyPoints: Record<string, number> = {
 }
 
 //! GET - return all chores
-export const getAllChores = async function (request: Request, response: Response) {
+async function getAllChores(request: Request, response: Response) {
   try {
-    const data = await Chore.find({});
+    const data = await Chore.find({}).populate('assignee');
     response.status(200).json(data);
   } catch (error) {
     response.status(400).json(error);
@@ -21,10 +21,10 @@ export const getAllChores = async function (request: Request, response: Response
 };
 
 //! POST - create new unassigned and open chore
-export const generateChore = async function (request: Request, response: Response) {
-  const { name, difficulty } = request.body;
-
-  if (!name || typeof name !== 'string') { 
+async function generateChore (request: Request, response: Response) {
+  const { choreName, difficulty } = request.body;
+  
+  if (!choreName || typeof choreName !== 'string') { 
     response.status(400).send('Bad Request, Name is required, must be a string and different from existing entries');
     return;
   } 
@@ -32,14 +32,22 @@ export const generateChore = async function (request: Request, response: Respons
     response.status(400).send('Bad Request, Difficulty is a number required for point reward calculation');
     return;
   }
+  
+  const parsedName = parseName(choreName);
+  const parsedDifficulty = parseName(difficulty).toLowerCase().trim();
+  
+  if (!['easy', 'medium', 'hard'].includes(parsedDifficulty)) {
+    console.log('in generatechore in chorecontroller');
+    response.status(400).send('Bad Request, Difficulty must be "easy", "medium", or "hard"');
+    return;
+  }
 
-  const parsedName = parseName(name);
-  const parsedDifficulty = parseName(difficulty);
   try {
     const data = await Chore.create({
       name: parsedName,
       difficulty: parsedDifficulty,
       pointReward: choreDifficultyPoints[parsedDifficulty],
+      assignee: null,
     })
     response.status(201).json(data);
   } catch (error) {
@@ -48,7 +56,8 @@ export const generateChore = async function (request: Request, response: Respons
   }
 };
 
-export const toggleIsDone = async function (request: Request, response: Response) {
+//! PUT - open or close chore
+async function toggleIsDone (request: Request, response: Response) {
   const { choreId } = request.body;
   if (!choreId) {
     //do not need to check for typeof as already implied by Schema and checks at generateChore and generateUser
@@ -56,11 +65,34 @@ export const toggleIsDone = async function (request: Request, response: Response
     return;
   }
   try {
+    const choreToUpdate = await Chore.findById(choreId);
+    if (!choreToUpdate) {
+      response.status(404).send('Bad Request, chore not found');
+      return;
+    }
+
+    const userId = choreToUpdate.assignee;
+    const pointChange = choreToUpdate.pointReward;
+    const newIsDone = !choreToUpdate.isDone;
+
     const updatedChore = await Chore.findByIdAndUpdate(
       choreId, 
-      [{ $set: { isDone: { $not: "!isDone"} } }], 
+      { isDone: newIsDone }, 
       {new: true}
-    );
+    ).populate('assignee');
+
+    let updatedUser;
+    if (userId) {
+      updatedUser = await User.findById(userId);
+      if (updatedUser) {
+        const updatedPoints = newIsDone
+          ? updatedUser.pointReward + pointChange
+          : updatedUser.pointReward - pointChange;
+        await User.findByIdAndUpdate(userId, { pointReward: updatedPoints }, { new: true })
+      }
+    }
+    console.log(updatedChore);
+    response.status(200).json(updatedChore);
   } catch (error) {
     response.status(500).json(error);
   }
@@ -95,8 +127,9 @@ export const toggleIsDone = async function (request: Request, response: Response
 //   }
 // };
 
-export const changeAssignment = async function (request: Request, response: Response) {
-  const { userId, choreId, assigning } = request.body;
+//! PUT - assign and unassign chore to a user
+async function changeAssignment (request: Request, response: Response) {
+  const { userId, choreId, assigningBool } = request.body;
   if (!userId || !choreId) {
     //do not need to check for typeof as already implied by Schema and checks at generateChore and generateUser
     response.status(400).send("Bad Request, user and chore required");
@@ -105,7 +138,8 @@ export const changeAssignment = async function (request: Request, response: Resp
   try {
     let updatedChore;
     let updatedUser;
-    if (assigning) {
+    if (assigningBool) {
+      console.log('in changeassignment in chorecontroller try assign=true');
       //chore gets assigned
       updatedChore = await Chore.findByIdAndUpdate(
         choreId, 
@@ -115,20 +149,21 @@ export const changeAssignment = async function (request: Request, response: Resp
       //user gets new chore
       updatedUser = await User.findByIdAndUpdate(
         userId, 
-        [{ $addToSet: { assignedChores: choreId } }], //ensures no duplicates
+        { $addToSet: { assignedChores: choreId } }, //ensures no duplicates
         { new: true }
       );
     } else {
+      console.log('in changeassignment in chorecontroller try assign=false');
       //chore gets unassigned
       updatedChore = await Chore.findByIdAndUpdate(
         choreId,
         { assignee: null },
         { new: true }
-      );
+      ).populate('assignee');
       //user removes chore
       updatedUser = await User.findByIdAndUpdate(
         userId,
-        [{ $pull: { assignedChores: choreId } }],
+        { $pull: { assignedChores: choreId } },
         { new: true }
       );
     }
@@ -137,9 +172,10 @@ export const changeAssignment = async function (request: Request, response: Resp
       response.status(404).send('Bad Request, chore or user not found');
       return;
     }
-
+    console.log(updatedChore);
     response.status(200).json(updatedChore);
   } catch (error) {
+    console.log(error);
     response.status(500).json(error);
   }
 };
@@ -174,3 +210,5 @@ export const changeAssignment = async function (request: Request, response: Resp
 //     }
 //   }
 // };
+
+export { getAllChores, generateChore, toggleIsDone, changeAssignment };

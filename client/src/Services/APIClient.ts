@@ -1,5 +1,5 @@
-import { User } from '../types/user';
-import { Chore } from '../types/chore';
+import { Chore, User } from '../types/types';
+import { Types } from 'mongoose';
 
 const baseUrl = 'http://localhost:3000';
 
@@ -17,7 +17,7 @@ const baseUrl = 'http://localhost:3000';
 // }
 
 //! USER
-export async function getAllUsers(): Promise<User[] | undefined> {
+async function getAllUsers(): Promise<User[] | undefined> {
   try {
     const response = await fetch(`${baseUrl}/users`, {
       method: "GET",
@@ -29,7 +29,7 @@ export async function getAllUsers(): Promise<User[] | undefined> {
   }
 }
 
-export async function getCurrentUser(): Promise<User | undefined> {
+async function getCurrentUser(): Promise<User | undefined> {
   try {
     const response = await fetch(`${baseUrl}/users/current`, {
       method: "GET",
@@ -42,7 +42,7 @@ export async function getCurrentUser(): Promise<User | undefined> {
   }
 }
 
-export async function generateUser(name: string): Promise<User | undefined> {
+async function generateUser(name: string): Promise<User | undefined> {
   try {
     const response = await fetch(`${baseUrl}/users`, {
       method: "POST",
@@ -50,6 +50,7 @@ export async function generateUser(name: string): Promise<User | undefined> {
       headers: {"Content-Type": "application/json"}
     });
     const data = await response.json();
+    console.log('apiclient generate user data: ', data);
     return data;
   } catch (error) {
     console.log(error);
@@ -57,7 +58,7 @@ export async function generateUser(name: string): Promise<User | undefined> {
   }
 }
 
-export async function logoutUser(): Promise<User | undefined> {
+async function logoutUser(): Promise<User | undefined> {
   try {
     const response = await fetch(`${baseUrl}/users/logout`, {
       method: "PUT",
@@ -72,91 +73,26 @@ export async function logoutUser(): Promise<User | undefined> {
 
 
 //! CHORE
-export async function getAllChores(user: string): Promise<Chore[] | undefined> {
+async function getAllChores(): Promise<Chore[] | undefined> {
   try {
-    const response = await fetch(`${baseUrl}/${user}/chores`);
+    const response = await fetch(`${baseUrl}/chores`);
+
     if (!response.ok) throw new Error('Failed to fetch chores');
+
     const data: Chore[] = await response.json();
-    data.sort((a, b) => a.pointReward - b.pointReward);
-    return data;
+    const sortedData = data.sort((a, b) => a.pointReward - b.pointReward);
+    return sortedData;
   } catch (error) {
     console.error('Error fetching chores from the server:', error);
   }
 }
 
-//TODO need to get :user and :name from other places and find a way to put them as params for request here
-
-export async function assignChore(user: string, name: string): Promise<any> {
-  const parsedUser = user.toLowerCase();
-  const parsedName = name.toLowerCase();
+async function generateChore(choreName: string, difficulty: 'easy' | 'medium' | 'hard'): Promise<Chore | undefined> {
+  const parsedChoreName = choreName.toLowerCase();
   try {
-    const response = await fetch(`${baseUrl}/${parsedUser}/chores/assign/${parsedName}`, {
-      method: "PUT",
-    });
-    const data = await response.json();
-    console.log('assign chore data: ', data);
-    return data;
-  } catch (error) {
-    console.log(error);
-    console.log('Error assigning chore');
-  }
-}
-
-export async function unassignChore(user: string, name: string): Promise<any> {
-  const parsedUser = user.toLowerCase();
-  const parsedName = name.toLowerCase();
-  try {
-    const response = await fetch(`${baseUrl}/${parsedUser}/chores/unassign/${parsedName}`, {
-      method: "PUT",
-    });
-    const data = await response.json();
-    console.log('unassign chore data: ', data);
-    return data;
-  } catch (error) {
-    console.log(error);
-    console.log('Error assigning chore');
-  }
-}
-
-export async function completeChore(user: string, name: string): Promise<any>{
-  const parsedUser = user.toLowerCase();
-  const parsedName = name.toLowerCase();
-  try {
-    const response = await fetch(`${baseUrl}/${parsedUser}/chores/markcomplete/${parsedName}`, {
-      method: "PUT",
-    });
-    const data = await response.json();
-    console.log('complete chore data: ', data);
-    return data;
-  } catch (error) {
-    console.log(error);
-    console.log('Error completing chore');
-  }
-}
-
-export async function reopenChore(user: string, name: string): Promise<any> {
-  const parsedUser = user.toLowerCase();
-  const parsedName = name.toLowerCase();
-  try {
-    const response = await fetch(`${baseUrl}/${parsedUser}/chores/marknotcomplete/${parsedName}`, {
-      method: "PUT",
-    });
-    const data = await response.json();
-    console.log('reopen chore data: ', data);
-    return data;
-  } catch (error) {
-    console.log(error);
-    console.log('Error reopening chore');
-  }
-}
-
-export async function generateChore(user: string, name: string, difficulty: string): Promise<any> {
-  const parsedUser = user.toLowerCase();
-  const parsedName = name.toLowerCase();
-  try {
-    const response = await fetch(`${baseUrl}/${parsedUser}/chores`, {
+    const response = await fetch(`${baseUrl}/chores`, {
       method: "POST",
-      body: JSON.stringify({ "name": parsedName, "difficulty": difficulty }),
+      body: JSON.stringify({ choreName: parsedChoreName, difficulty}),
       headers: { "Content-type": "application/json" }
     });
     const data = await response.json();
@@ -167,4 +103,111 @@ export async function generateChore(user: string, name: string, difficulty: stri
   }
 }
 
-export default baseUrl;
+async function toggleIsDone(choreId: Types.ObjectId) {
+  try {
+    const response = await fetch(`${baseUrl}/chores/toggleIsDone`, {
+      method: "PUT",
+      body: JSON.stringify({ choreId }),
+      headers: { "Content-Type": "application/json"}
+    })
+    if (response.ok) {
+      const data = await response.json();
+      console.log('data in toggleIsDone apiclient: ', data);
+      return data;
+    }
+  } catch (error) {
+    console.log(error);
+    console.log('Error toggling isDone');
+  }
+}
+// export async function completeChore(user: string, name: string): Promise<any>{
+//   const parsedUser = user.toLowerCase();
+//   const parsedName = name.toLowerCase();
+//   try {
+//     const response = await fetch(`${baseUrl}/${parsedUser}/chores/markcomplete/${parsedName}`, {
+//       method: "PUT",
+//     });
+//     const data = await response.json();
+//     console.log('complete chore data: ', data);
+//     return data;
+//   } catch (error) {
+//     console.log(error);
+//     console.log('Error completing chore');
+//   }
+// }
+
+// export async function reopenChore(user: string, name: string): Promise<any> {
+//   const parsedUser = user.toLowerCase();
+//   const parsedName = name.toLowerCase();
+//   try {
+//     const response = await fetch(`${baseUrl}/${parsedUser}/chores/marknotcomplete/${parsedName}`, {
+//       method: "PUT",
+//     });
+//     const data = await response.json();
+//     console.log('reopen chore data: ', data);
+//     return data;
+//   } catch (error) {
+//     console.log(error);
+//     console.log('Error reopening chore');
+//   }
+// }
+
+async function changeAssignment(userId: Types.ObjectId, choreId: Types.ObjectId, assigningBool: boolean) {
+  try {
+    const response = await fetch(`${baseUrl}/chores/change-assignment`, {
+      method: "PUT",
+      body: JSON.stringify({ userId, choreId, assigningBool }),
+      headers: { "Content-Type": "application/json"}
+    })
+    if (response.ok) {
+      const data = await response.json();
+      console.log('data in change assignment apiclient: ', data);
+      return data;
+    }
+  } catch (error) {
+    console.log(error);
+    console.log('Error assigning or unassigning');
+  }
+}
+// export async function assignChore(user: string, name: string): Promise<any> {
+//   const parsedUser = user.toLowerCase();
+//   const parsedName = name.toLowerCase();
+//   try {
+//     const response = await fetch(`${baseUrl}/${parsedUser}/chores/assign/${parsedName}`, {
+//       method: "PUT",
+//     });
+//     const data = await response.json();
+//     console.log('assign chore data: ', data);
+//     return data;
+//   } catch (error) {
+//     console.log(error);
+//     console.log('Error assigning chore');
+//   }
+// }
+
+// export async function unassignChore(user: string, name: string): Promise<any> {
+//   const parsedUser = user.toLowerCase();
+//   const parsedName = name.toLowerCase();
+//   try {
+//     const response = await fetch(`${baseUrl}/${parsedUser}/chores/unassign/${parsedName}`, {
+//       method: "PUT",
+//     });
+//     const data = await response.json();
+//     console.log('unassign chore data: ', data);
+//     return data;
+//   } catch (error) {
+//     console.log(error);
+//     console.log('Error assigning chore');
+//   }
+// }
+
+export { 
+  getAllUsers, 
+  getCurrentUser, 
+  generateUser, 
+  logoutUser, 
+  getAllChores, 
+  generateChore, 
+  toggleIsDone, 
+  changeAssignment 
+};

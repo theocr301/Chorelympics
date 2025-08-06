@@ -2,7 +2,7 @@ import { Request, Response } from 'express';
 import User from '../Models/userModels';
 import { parseName } from '../utils';
 
-export const getAllUsers = async (req: Request, res: Response): Promise<void> => {
+async function getAllUsers (req: Request, res: Response): Promise<void> {
   try {
     const data = await User.find({});
     res.status(200);
@@ -13,7 +13,7 @@ export const getAllUsers = async (req: Request, res: Response): Promise<void> =>
   }
 };
 
-export const getCurrentUser = async (req: Request, res: Response): Promise<void> => {
+async function getCurrentUser (req: Request, res: Response): Promise<void> {
   try {
     const data = await User.findOne({ isCurrent: true });
     res.status(200);
@@ -24,7 +24,7 @@ export const getCurrentUser = async (req: Request, res: Response): Promise<void>
   }
 }
 
-export const generateUser = async (req: Request, res: Response): Promise<void> => {
+async function generateUser (req: Request, res: Response): Promise<void> {
   console.log('in generate user controller');
   const { name } = req.body;
 
@@ -47,12 +47,13 @@ export const generateUser = async (req: Request, res: Response): Promise<void> =
       user = updatedUser;
     } else {
       //register user as new and login
-      const newUser = User.create({
+      const newUser = await User.create({
         name: parsedName,
         isCurrent: true,
       })
       user = newUser;
     }
+
     res.status(201).json(user);
   } catch (error) {
     console.error(error);
@@ -60,7 +61,7 @@ export const generateUser = async (req: Request, res: Response): Promise<void> =
   }
 };
 
-export const logoutUser = async (req: Request, res: Response) : Promise<void> => {
+async function logoutUser (req: Request, res: Response) : Promise<void> {
   try {
     const data = await User.findOneAndUpdate({ isCurrent: true }, { $set: { 'isCurrent': false } }, { new: true })
     res.status(200);
@@ -70,3 +71,5 @@ export const logoutUser = async (req: Request, res: Response) : Promise<void> =>
     res.send(error);
   }
 }
+
+export { getAllUsers, getCurrentUser, generateUser, logoutUser };

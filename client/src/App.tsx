@@ -1,15 +1,25 @@
 import './App.css'
-import LandingPage from './Components/LandingPage/LandingPage';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import ChoreList from './Components/ChoreList/ChoreList';
 import { useState, useEffect } from 'react';
-import { User } from './types/user';
-import { getAllUsers, getCurrentUser  } from './Services/APIClient';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import LandingPage from './Components/LandingPage/LandingPage';
+import ChoreList from './Components/ChoreList/ChoreList';
+import { User, Chore } from './types/types';
+import { getAllUsers, getCurrentUser, getAllChores  } from './Services/APIClient';
 
 export default function App() {
   const [currentUser, setCurrentUser] = useState<User | null>(null); //pass down instead of making new props
   const [userList, setUserList] = useState<User[]>([]); //to pass to leaderboard
+  const [choreList, setChoreList] = useState<Chore[]>([]);
   
+  function normalizeDifficulty(difficulty: string): "easy" | "medium" | "hard" {
+    switch (difficulty.toLowerCase()) {
+      case "easy": return "easy";
+      case "medium": return "medium";
+      case "hard": return "hard";
+      default: throw new Error("Unknown difficulty");
+    }
+  }
+
   useEffect(() => {
     async function fetchCurrentUser() {
       try {
@@ -28,23 +38,40 @@ export default function App() {
         console.log(error);
       }
     }
+    async function fetchAllChores() {
+      try {
+        const chores = await getAllChores();
+        if (chores) {
+          const normalizedChores = chores.map((chore) => (
+            {...chore, difficulty:normalizeDifficulty(chore.difficulty)}
+          ));
+          setChoreList(normalizedChores);
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    }
     
     fetchCurrentUser();
     fetchAllUsers();
+    fetchAllChores();
   }, []);
-
+  
+  console.log('chorelist in app: ',choreList);
   return (
     <div className="body-container">
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<LandingPage setCurrentUser={setCurrentUser} setUserList={setUserList}/>} />
-          <Route path="/:user/chores" element={ 
+          <Route path="/chores" element={ 
             currentUser ? ( //conditionally render ChoreList only if currentUser exists
               <ChoreList 
                 currentUser={currentUser} 
                 setCurrentUser={setCurrentUser} 
                 userList={userList}
-                setUserList={setUserList} />
+                setUserList={setUserList}
+                choreList={choreList}
+                setChoreList={setChoreList} />
             ) : (
               <div>Loading...</div>
             )
