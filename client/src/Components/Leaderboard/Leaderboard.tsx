@@ -2,20 +2,9 @@ import { useEffect, useState } from 'react'
 import { getAllUsers } from '../../Services/APIClient.js'
 import UserItem from '../UserItem/UserItem.jsx'
 import './Leaderboard.css';
+import { LeaderboardProps } from '../../types/user';
 
-import { User } from '../../types/user';
-
-export default function Leaderboard() {
-  const [userList, setUserList] = useState<User[]>([]);
-
-  useEffect(() => {
-    getAllUsers().then((users) => {
-      if (users) {
-        setUserList(users);
-      }
-    });
-  }, []);
-
+export default function Leaderboard({ userList }: LeaderboardProps) {
   return (
     <div id="List">
       <div className="Leaderboard">

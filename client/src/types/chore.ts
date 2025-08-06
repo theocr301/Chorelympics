@@ -23,7 +23,7 @@ export interface ChoreProps {
 }
 export interface ChoreItemProps {
   choreItem: Chore,
-  user: string,
+  // user: string,
   setChoreList: React.Dispatch<React.SetStateAction<Chore[]>>
 }
 export interface AddChoreProps {
@@ -37,4 +37,8 @@ export interface AddChoreProps {
   setDifficulty: React.Dispatch<React.SetStateAction<"easy" | "medium" | "hard">>,
   onClose: () => void,
   user: string,
+}
+
+export interface AddNewChoreProps {
+  onClose: () => void,
 }

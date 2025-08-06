@@ -1,8 +1,11 @@
 import './ChoreItem.css';
-import { assignChore, completeChore, unassignChore, reopenChore } from '../../Services/APIClient.js';
+import { assignChore, completeChore, unassignChore, reopenChore, getAllUsers } from '../../Services/APIClient.js';
 import { ChoreItemProps } from '../../types/chore';
+import { ChoreItemUserProp } from '../../types/user';
 
-export default function ChoreItem({ choreItem, setChoreList, user }: ChoreItemProps) {
+type props = ChoreItemProps & ChoreItemUserProp;
+
+export default function ChoreItem({ choreItem, setChoreList, currentUser, setUserList }: props) {
   const difficultyImages = {
   easy: '/Easy.svg',
   medium: '/Medium.svg',
@@ -10,7 +13,7 @@ export default function ChoreItem({ choreItem, setChoreList, user }: ChoreItemPr
   };
 
   async function handleAssign(event: React.MouseEvent<HTMLButtonElement>): Promise<void> {
-    const assigned = await assignChore(user, choreItem.name);
+    const assigned = await assignChore(currentUser.name, choreItem.name);
     setChoreList(oldChoreList => {
       const updatedChoreList = [];
       for (let i = 0; i < oldChoreList.length; i++) {
@@ -22,10 +25,12 @@ export default function ChoreItem({ choreItem, setChoreList, user }: ChoreItemPr
       }
       return updatedChoreList;
     });
+    const updatedUsers = await getAllUsers();
+    if (updatedUsers) setUserList(updatedUsers);
   };
-
+  
   async function handleUnassign(event: React.MouseEvent<HTMLButtonElement>): Promise<void> {
-    const unassigned = await unassignChore(user, choreItem.name);
+    const unassigned = await unassignChore(currentUser.name, choreItem.name);
     setChoreList(oldChoreList => {
       const updatedChoreList = [];
       for (let i = 0; i < oldChoreList.length; i++) {
@@ -37,10 +42,12 @@ export default function ChoreItem({ choreItem, setChoreList, user }: ChoreItemPr
       }
       return updatedChoreList;
     });
+    const updatedUsers = await getAllUsers();
+    if (updatedUsers) setUserList(updatedUsers);
   }
-
+  
   async function handleComplete(event: React.MouseEvent<HTMLButtonElement>): Promise<void> {
-    const completed = await completeChore(user, choreItem.name);
+    const completed = await completeChore(currentUser.name, choreItem.name);
     setChoreList(oldChoreList => {
       const updatedChoreList = [];
       for (let i = 0; i < oldChoreList.length; i++) {
@@ -52,10 +59,12 @@ export default function ChoreItem({ choreItem, setChoreList, user }: ChoreItemPr
       }
       return updatedChoreList;
     });
+    const updatedUsers = await getAllUsers();
+    if (updatedUsers) setUserList(updatedUsers);
   };
-
+  
   async function handleReopen(event: React.MouseEvent<HTMLButtonElement>): Promise<void> {
-    const reopened = await reopenChore(user, choreItem.name);
+    const reopened = await reopenChore(currentUser.name, choreItem.name);
     setChoreList(oldChoreList => {
       const updatedChoreList = [];
       for (let i = 0; i < oldChoreList.length; i++) {
@@ -67,6 +76,8 @@ export default function ChoreItem({ choreItem, setChoreList, user }: ChoreItemPr
       }
       return updatedChoreList;
     });
+    const updatedUsers = await getAllUsers();
+    if (updatedUsers) setUserList(updatedUsers);
   };
 
   return (

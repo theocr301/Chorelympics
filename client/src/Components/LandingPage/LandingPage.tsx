@@ -7,16 +7,22 @@ import { generateUser } from '../../Services/APIClient';
 
 const baseUrl = 'http://localhost:3000';
 
-export default function LandingPage({setUser}: LandingPageProps) {
+export default function LandingPage({setCurrentUser, setUserList}: LandingPageProps) {
   const [userName, setUserName] = useState<string>('');
   const navigate = useNavigate();
 
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     const user = await generateUser(userName);
+    console.log('landing page user: ',user);
     if (user) {
-      setUser(user);
-      navigate(`/${user}/chores`);
+      setCurrentUser(user);
+      //if user already in list, do not change it, otherwise add user to list
+      setUserList(prev => {
+        const exists = prev.some(existingUser => existingUser.name === user.name);
+        return exists ? prev : [...prev, user];
+      })
+      navigate(`/${user.name}/chores`);
     }
   }
 
