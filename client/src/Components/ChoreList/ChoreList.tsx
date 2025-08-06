@@ -76,7 +76,7 @@ export default function ChoreList({ currentUser, setCurrentUser, userList, setUs
                 <img src={`/${currentUser?.profilePic ?? 'Avatar.svg'}`}></img>
               </div>
               <div className="user-name">
-                {currentUser?.name}
+                {currentUser.name}
               </div>
             </div>
             <button className="changeUserButton" type="submit" onClick={handleLogout}>CHANGE USER</button>
@@ -85,7 +85,7 @@ export default function ChoreList({ currentUser, setCurrentUser, userList, setUs
             <div className="Coin">
               <div className="InnerCoin"></div>
             </div>
-            <span className="point-value">{currentUser?.pointReward ?? 0}</span>
+            <span className="point-value">{currentUser.pointReward ?? 0}</span>
           </div>
         </div>
         <img src={spongyImage} className="mascot"></img>

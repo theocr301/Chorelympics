@@ -49,7 +49,7 @@ export interface LeaderboardProps {
 
 //using
 export interface AddNewChoreUserProps {
-  currentUser: User | null,
+  currentUser: User,
 }
 
 //using

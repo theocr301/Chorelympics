@@ -18,12 +18,10 @@ export const generateChore = async function (request: Request, response: Respons
   const { name, difficulty } = request.body;
 
 
-  if (!name || typeof name !== 'string') {
+  if (!name || typeof name !== 'string') { 
     response.status(400).send('Bad Request, Name is required, must be a string and different from existing entries');
   } else if (!difficulty || typeof difficulty !== 'string') {
     response.status(400).send('Bad Request, Difficulty is a number required for point reward calculation');
-  /* } else if (!duration || typeof duration !== 'number') {
-    response.status(400).send('Bad Request, Duration is a number required for point reward calculation'); */
   } else {
     try {
       if (difficulty === 'medium') {
