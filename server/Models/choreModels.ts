@@ -1,20 +1,19 @@
-// const mongoose = require('../db.js');
 import mongoose from '../db';
-import User from '../Models/userModels';
-// const { parseName } = require('../utils.js');
+import User, { IUser } from '../Models/userModels';
 import { parseName } from '../utils';
+import { Model } from 'mongoose';
 
 //TODO: interface
-interface Chore extends mongoose.Document {
+export interface IChore extends mongoose.Document {
   name: string,
   difficulty: string,
   duration: number,
   isDone: boolean,
   pointReward: number,
-  assignee: string,
+  assignee: Model<IUser>,
 }
 
-const ChoreSchema = new mongoose.Schema<Chore>({
+const ChoreSchema = new mongoose.Schema<IChore>({
   name: {
     type: String, 
     required: true,
@@ -36,12 +35,13 @@ const ChoreSchema = new mongoose.Schema<Chore>({
     default: 0
   },
   assignee: {
-    type: String,
-    default: 'Unassigned',
+    type: mongoose.Schema.ObjectId,
+    ref: 'User',
+    default: null
   }
 });
 
-const Chore = mongoose.model<Chore>('Chore', ChoreSchema);
+const Chore = mongoose.model<IChore>('Chore', ChoreSchema);
 
 // TODO build a function here that imports User from userModel and pushed the chore id to the user choresArray - done i think?
 // TODO find the correct chore, invoke this function in choreController - done i think?
@@ -52,7 +52,7 @@ const pushChore = async function (user: string, choreName: string): Promise<any>
       { name: parseName(choreName) }, 
       { $set: { 'assignee': parseName(user) } }, 
       { new: true }
-    ) as Chore;
+    ) as IChore;
     const data = await User.findOneAndUpdate(
       { name: parseName(user) }, 
       { $push: { 'assignedChores': updatedChore.name } }, 
@@ -73,7 +73,7 @@ const removeChore = async function (user: string, choreName: string): Promise<an
       { name: parseName(choreName) }, 
       { $set: { 'assignee': 'Unassigned' } }, 
       { new: true }
-    ) as Chore;
+    ) as IChore;
     const data = await User.findOneAndUpdate(
       { name: parseName(user) }, 
       { $pull: { 'assignedChores': updatedChore.name } },
@@ -92,7 +92,7 @@ const closeChore = async function (user: string, choreName: string): Promise<any
       { name: parseName(choreName) }, 
       { $set: { 'isDone': true, 'assignee': parseName(user) } }, 
       { new: true }
-    ) as Chore;
+    ) as IChore;
     const userData = await User.findOne(
       { name: parseName(user) }
     ); //! add User interface
@@ -115,7 +115,7 @@ const reopenChore = async function (user: string, choreName: string): Promise<an
       { name: parseName(choreName) }, 
       { $set: { 'isDone': false } }, 
       { new: true }
-    ) as Chore;
+    ) as IChore;
     const userData = await User.findOne(
       { name: parseName(user) }
     ); //! add User interface
@@ -133,4 +133,4 @@ const reopenChore = async function (user: string, choreName: string): Promise<an
 };
 
 // module.exports = { Chore, pushChore, removeChore, closeChore, reopenChore };
-export { Chore, pushChore, removeChore, closeChore, reopenChore };
+export { IChore as Chore, pushChore, removeChore, closeChore, reopenChore };

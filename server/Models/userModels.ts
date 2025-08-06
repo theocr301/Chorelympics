@@ -1,16 +1,17 @@
-//import db from '../db';
-import mongoose, { Schema, Document, Model } from 'mongoose';
+import mongoose from '../db';
+import { Schema, Document, Model } from 'mongoose';
+import { IChore } from './choreModels';
 
 export interface IUser extends Document {
   name: string;
   pointReward: number;
-  assignedChores: string[];
+  assignedChores: Model<IChore>[];
   isCurrent: boolean;
   profilePic: string;
 }
 
 
-const UserSchema = new mongoose.Schema({
+const UserSchema = new mongoose.Schema<IUser>({
   name: {
     type: String,
     required: true,
@@ -20,9 +21,12 @@ const UserSchema = new mongoose.Schema({
     type: Number,
     default: 0
   },
-  assignedChores: { //TODO change to Array of Object Id of chores
-    type: Array,
-    default: []
+  assignedChores: {
+    type: [{
+      type: mongoose.Schema.ObjectId,
+      ref: 'Chore',
+    }],
+    default: [],
   },
   isCurrent: {
     type: Boolean,
