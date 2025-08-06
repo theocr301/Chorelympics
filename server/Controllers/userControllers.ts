@@ -25,13 +25,13 @@ async function getCurrentUser (req: Request, res: Response): Promise<void> {
 }
 
 async function generateUser (req: Request, res: Response): Promise<void> {
-  console.log('in generate user controller');
   const { name } = req.body;
 
   if (!name || typeof name !== 'string') {
     res.status(400).send('Bad Request, Name is required, must be a string and different from existing entries');
     return;
   }
+  
   try {
     const parsedName = parseName(name);
     const existingUser = await User.findOne({ name: parsedName });

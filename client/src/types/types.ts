@@ -19,11 +19,6 @@ export type Chore = {
   assignee: Types.ObjectId | User | null,
 }
 
-// export interface AppProps {
-//   showForm: boolean,
-//   setShowForm: React.Dispatch<React.SetStateAction<boolean>>,
-// }
-
 export interface LandingPageProps {
   setCurrentUser: React.Dispatch<React.SetStateAction<User | null>>,
   setUserList: React.Dispatch<React.SetStateAction<User[]>>,

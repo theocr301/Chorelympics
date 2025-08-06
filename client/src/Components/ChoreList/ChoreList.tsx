@@ -27,7 +27,6 @@ export default function ChoreList({ currentUser, setCurrentUser, userList, setUs
   function handleNewChore() {
     setShowForm((prev) => !prev);
   }
-  console.log(choreList);
 
   useEffect(() => {
     const unassigned = choreList.filter(
@@ -38,9 +37,7 @@ export default function ChoreList({ currentUser, setCurrentUser, userList, setUs
       chore.assignee &&
       !chore.isDone &&
       (
-        // If assignee is populated user object
         (typeof chore.assignee === 'object' && 'name' in chore.assignee && chore.assignee._id.toString() === currentUser._id.toString())
-        // Or if assignee is just an ObjectId
         || (chore.assignee === currentUser._id)
       )
   );
