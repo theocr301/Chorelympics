@@ -15,13 +15,7 @@ export default function ChoreItem({ choreItem, currentUser, setChoreList, setUse
     const choreToAssign: Chore = await changeAssignment(userId, choreId, assigningBool);
     if (choreToAssign) {
       const allChores = await getAllChores();
-      console.log('allchores in assignunassign helper: ',allChores);
       if (allChores) setChoreList(allChores);
-      // setChoreList(prev => 
-      //   prev.map(chore => 
-      //     chore._id.toString() === choreToAssign._id.toString() ? choreToAssign : chore
-      //   )
-      // );
       const updatedUsers = await getAllUsers();
       if (updatedUsers) setUserList(updatedUsers);
     }
@@ -64,22 +58,6 @@ export default function ChoreItem({ choreItem, currentUser, setChoreList, setUse
       console.log(error);
     }
   }
-  // async function handleMarkAsDone(event: React.MouseEvent<HTMLButtonElement>): Promise<void> {
-  //   const completed = await completeChore(currentUser.name, choreItem.name);
-  //   setChoreList(oldChoreList => {
-  //     const updatedChoreList = [];
-  //     for (let i = 0; i < oldChoreList.length; i++) {
-  //       if (oldChoreList[i].name === completed.updatedChore.name) {
-  //         updatedChoreList[i] = completed.updatedChore
-  //       } else {
-  //         updatedChoreList[i] = oldChoreList[i]
-  //       }
-  //     }
-  //     return updatedChoreList;
-  //   });
-  //   const updatedUsers = await getAllUsers();
-  //   if (updatedUsers) setUserList(updatedUsers);
-  // };
             
   async function handleMarkAsNotDone (event: React.MouseEvent<HTMLButtonElement>): Promise<void> {
     try {
@@ -88,22 +66,6 @@ export default function ChoreItem({ choreItem, currentUser, setChoreList, setUse
       console.log(error);
     }
   }
-  // async function handleMarkAsNotDone(event: React.MouseEvent<HTMLButtonElement>): Promise<void> {
-  //   const reopened = await reopenChore(currentUser.name, choreItem.name);
-  //   setChoreList(oldChoreList => {
-  //     const updatedChoreList = [];
-  //     for (let i = 0; i < oldChoreList.length; i++) {
-  //       if (oldChoreList[i].name === reopened.updatedChore.name) {
-  //         updatedChoreList[i] = reopened.updatedChore
-  //       } else {
-  //         updatedChoreList[i] = oldChoreList[i]
-  //       }
-  //     }
-  //     return updatedChoreList;
-  //   });
-  //   const updatedUsers = await getAllUsers();
-  //   if (updatedUsers) setUserList(updatedUsers);
-  // };
 
   return (
     <>

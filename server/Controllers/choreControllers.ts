@@ -1,4 +1,3 @@
-// const { parseName } = require('../utils.js');
 import { parseName } from '../utils';
 import Chore from '../Models/choreModels';
 import { Request, Response } from 'express';
@@ -37,7 +36,6 @@ async function generateChore (request: Request, response: Response) {
   const parsedDifficulty = parseName(difficulty).toLowerCase().trim();
   
   if (!['easy', 'medium', 'hard'].includes(parsedDifficulty)) {
-    console.log('in generatechore in chorecontroller');
     response.status(400).send('Bad Request, Difficulty must be "easy", "medium", or "hard"');
     return;
   }
@@ -60,7 +58,6 @@ async function generateChore (request: Request, response: Response) {
 async function toggleIsDone (request: Request, response: Response) {
   const { choreId } = request.body;
   if (!choreId) {
-    //do not need to check for typeof as already implied by Schema and checks at generateChore and generateUser
     response.status(400).send("Bad Request, chore required");
     return;
   }
@@ -91,41 +88,11 @@ async function toggleIsDone (request: Request, response: Response) {
         await User.findByIdAndUpdate(userId, { pointReward: updatedPoints }, { new: true })
       }
     }
-    console.log(updatedChore);
     response.status(200).json(updatedChore);
   } catch (error) {
     response.status(500).json(error);
   }
 };
-// export const markChoreComplete = async function (request: Request, response: Response) {
-//   const { user, name } = request.params;
-
-//   if (!name || typeof name !== 'string' || !user || typeof user !== 'string') {
-//     response.status(400).send('Bad Request, Name is required and must be a string');
-//   } else {
-//     try {
-//       const { updatedChore, data } = await closeChore(user, name);
-//       response.status(200).send({ updatedChore, data });
-//     } catch (error) {
-//       response.status(400).send(error);
-//     }
-//   }
-// };
-
-// export const markChoreNotComplete = async function (request: Request, response: Response) {
-//   const { user, name } = request.params;
-
-//   if (!name || typeof name !== 'string' || !user || typeof user !== 'string') {
-//     response.status(400).send('Bad Request, Name is required and must be a string');
-//   } else {
-//     try {
-//       const { updatedChore, data } = await reopenChore(user, name);
-//       response.status(200).send({ updatedChore, data });
-//     } catch (error) {
-//       response.status(400).send(error);
-//     }
-//   }
-// };
 
 //! PUT - assign and unassign chore to a user
 async function changeAssignment (request: Request, response: Response) {
@@ -139,7 +106,6 @@ async function changeAssignment (request: Request, response: Response) {
     let updatedChore;
     let updatedUser;
     if (assigningBool) {
-      console.log('in changeassignment in chorecontroller try assign=true');
       //chore gets assigned
       updatedChore = await Chore.findByIdAndUpdate(
         choreId, 
@@ -153,7 +119,6 @@ async function changeAssignment (request: Request, response: Response) {
         { new: true }
       );
     } else {
-      console.log('in changeassignment in chorecontroller try assign=false');
       //chore gets unassigned
       updatedChore = await Chore.findByIdAndUpdate(
         choreId,
@@ -172,43 +137,11 @@ async function changeAssignment (request: Request, response: Response) {
       response.status(404).send('Bad Request, chore or user not found');
       return;
     }
-    console.log(updatedChore);
     response.status(200).json(updatedChore);
   } catch (error) {
     console.log(error);
     response.status(500).json(error);
   }
 };
-// export const assignChore = async function (request: Request, response: Response) {
-//   const { user, name } = request.params;
-
-//   if (!name || typeof name !== 'string' || !user || typeof user !== 'string') {
-//     response.status(400).send('Bad Request, Name or User is required and must be a string');
-//   } else {
-//     try {
-//       const { updatedChore, data } = await pushChore(user, name);
-//       response.status(200).send({ updatedChore, data });
-//     } catch (error) {
-//       console.log(error);
-//       response.status(400).send('Something went wrong while assigning chore');
-//     }
-//   }
-// };
-
-// export const unassignChore = async function (request: Request, response: Response) {
-//   const { user, name } = request.params;
-
-//   if (!name || typeof name !== 'string' || !user || typeof user !== 'string') {
-//     response.status(400).send('Bad Request, Name or User is required and must be a string');
-//   } else {
-//     try {
-//       const { updatedChore, data } = await removeChore(user, name);
-//       response.status(200).send({ updatedChore, data });
-//     } catch (error) {
-//       console.log(error);
-//       response.status(400).send('Something went wrong while unassigning chore');
-//     }
-//   }
-// };
 
 export { getAllChores, generateChore, toggleIsDone, changeAssignment };

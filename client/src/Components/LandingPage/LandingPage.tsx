@@ -14,7 +14,6 @@ export default function LandingPage({setCurrentUser, setUserList}: LandingPagePr
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     const user = await generateUser(userName);
-    // console.log('landing page user: ',user);
     if (user) {
       setCurrentUser(user);
       //if user already in list, do not change it, otherwise add user to list

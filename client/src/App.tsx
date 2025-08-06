@@ -57,7 +57,6 @@ export default function App() {
     fetchAllChores();
   }, []);
   
-  console.log('chorelist in app: ',choreList);
   return (
     <div className="body-container">
       <BrowserRouter>
