@@ -16,15 +16,29 @@ const baseUrl = 'http://localhost:3000';
 //   }
 // }
 
-export async function getAllChores(user: string): Promise<Chore[] | undefined> {
+//! USER
+export async function getAllUsers(): Promise<User[] | undefined> {
   try {
-    const response = await fetch(`${baseUrl}/${user}/chores`);
-    if (!response.ok) throw new Error('Failed to fetch chores');
-    const data: Chore[] = await response.json();
-    data.sort((a, b) => a.pointReward - b.pointReward);
+    const response = await fetch(`${baseUrl}/users`, {
+      method: "GET",
+    });
+    const data = await response.json();
     return data;
   } catch (error) {
-    console.error('Error fetching chores from the server:', error);
+    console.log(error);
+  }
+}
+
+export async function getCurrentUser(): Promise<User | undefined> {
+  try {
+    const response = await fetch(`${baseUrl}/users/current`, {
+      method: "GET",
+      headers: {"Content-Type": "application/json"}
+    });
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.log(error);
   }
 }
 
@@ -32,7 +46,7 @@ export async function generateUser(name: string): Promise<string | undefined> {
   try {
     const response = await fetch(`${baseUrl}/users`, {
       method: "POST",
-      body: JSON.stringify({ name, isCurrent: true}),
+      body: JSON.stringify({ name }),
       headers: {"Content-Type": "application/json"}
     });
     const data = await response.json();
@@ -43,41 +57,30 @@ export async function generateUser(name: string): Promise<string | undefined> {
   }
 }
 
-export async function getCurrentUser(): Promise<User | undefined> {
+export async function logoutUser(): Promise<string | undefined> {
   try {
-    const response = await fetch(`${baseUrl}/users/current`, {
-      method: "GET",
-      headers: {"Content-Type": "application/json"}
-    });
-    const data: User[] = await response.json();
-    return data[0];
-  } catch (error) {
-    console.log(error);
-  }
-}
-
-export async function logoutUser(user: string): Promise<string | undefined> {
-  try {
-    const response = await fetch(`${baseUrl}/users/logout/${user}`, {
+    const response = await fetch(`${baseUrl}/users/logout`, {
       method: "PUT",
       headers: {"Content-Type": "application/json"}
-    });
-    const data = await response.text();
-    return data;
-  } catch (error) {
-    console.log(error);
-  }
-}
-
-export async function getAllUsers(): Promise<User[] | undefined> {
-  try {
-    const response = await fetch(`${baseUrl}/users`, {
-      method: "GET",
     });
     const data = await response.json();
     return data;
   } catch (error) {
     console.log(error);
+  }
+}
+
+
+//! CHORE
+export async function getAllChores(user: string): Promise<Chore[] | undefined> {
+  try {
+    const response = await fetch(`${baseUrl}/${user}/chores`);
+    if (!response.ok) throw new Error('Failed to fetch chores');
+    const data: Chore[] = await response.json();
+    data.sort((a, b) => a.pointReward - b.pointReward);
+    return data;
+  } catch (error) {
+    console.error('Error fetching chores from the server:', error);
   }
 }
 
