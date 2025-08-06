@@ -3,18 +3,18 @@ import { Chore } from '../types/chore';
 
 const baseUrl = 'http://localhost:3000';
 
-function normalizeDifficulty(difficulty: string): "easy" | "medium" | "hard" {
-  switch (difficulty.toLowerCase()) {
-    case 'easy':
-      return 'easy';
-    case 'medium':
-      return 'medium';
-    case 'hard':
-      return 'hard';
-    default:
-      throw new Error('Invalid difficulty level');
-  }
-}
+// function normalizeDifficulty(difficulty: string): "easy" | "medium" | "hard" {
+//   switch (difficulty.toLowerCase()) {
+//     case 'easy':
+//       return 'easy';
+//     case 'medium':
+//       return 'medium';
+//     case 'hard':
+//       return 'hard';
+//     default:
+//       throw new Error('Invalid difficulty level');
+//   }
+// }
 
 export async function getAllChores(user: string): Promise<Chore[] | undefined> {
   try {

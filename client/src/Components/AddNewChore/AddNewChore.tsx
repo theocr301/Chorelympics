@@ -1,9 +1,6 @@
 import { useState } from 'react';
 import { generateChore } from '../../Services/APIClient';
 import { AddChoreProps } from '../../types/chore';
-import { UserProps } from '../../types/user';
-
-type Props = AddChoreProps & UserProps;
 
 export default function AddNewChore({ onClose, user }: AddChoreProps) {
   const [choreName, setChoreName] = useState('');
