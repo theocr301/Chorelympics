@@ -42,5 +42,7 @@ test('renders Leaderboard list', async () => {
   await waitFor(() => {
     expect(screen.getByText('Alice')).toBeInTheDocument();
     expect(screen.getByText('Bob')).toBeInTheDocument();
+    //expect(screen.getByText(80)).toBeInTheDocument();
+    //expect(screen.getByText(100)).toBeInTheDocument();
   });
 });
